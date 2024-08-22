@@ -15,7 +15,14 @@ module.exports = {
       const channelArg = args.shift();
 
       if (!channelArg) {
-        await message.react("🚫");
+        await prisma.guild.update({
+          where: { guildId: message.guildId! },
+          data: {
+            levelUpChannelId: null,
+          },
+        });
+
+        await message.react("✅");
         return;
       }
 
