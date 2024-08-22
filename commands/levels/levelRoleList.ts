@@ -1,7 +1,7 @@
 import { EmbedBuilder, Message } from "discord.js";
 import emojis from "../../services/emojis";
 import { prisma } from "../../prisma/client";
-import { hasPermissions } from "../../services/utils";
+import { hasPermissions } from "../../services/user";
 
 module.exports = {
   name: "levelrole-list",

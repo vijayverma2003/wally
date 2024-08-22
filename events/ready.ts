@@ -9,7 +9,7 @@ module.exports = {
       scanAndCreateGuilds(client);
       console.log(`Logged in as ${client.user?.displayName} successfully! ♥️`);
     } catch (error) {
-      console.log("[ERROR] [CLIENT READY]", error);
+      console.log("Error - Client Ready", error);
     }
   },
 };

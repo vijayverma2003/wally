@@ -1,9 +1,7 @@
 import { Message } from "discord.js";
 import { prisma } from "../../prisma/client";
-import {
-  extractChannelIdFromMention,
-  hasPermissions,
-} from "../../services/utils";
+import { hasPermissions } from "../../services/user";
+import { extractChannelIdFromMention } from "../../services/utils";
 
 module.exports = {
   name: "set-levelup-channel",

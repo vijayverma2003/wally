@@ -10,7 +10,7 @@ module.exports = {
         data: { guildId: guild.id, sendLevelUpMessage: false },
       });
     } catch (error) {
-      console.log("[EVENT] [GUILD CREATE]", error);
+      console.log("Event - Guild Create", error);
     }
   },
 };

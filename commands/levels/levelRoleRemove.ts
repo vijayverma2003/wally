@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import { prisma } from "../../prisma/client";
-import { hasPermissions } from "../../services/utils";
+import { hasPermissions } from "../../services/user";
 
 module.exports = {
   name: "levelrole-remove",

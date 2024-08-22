@@ -1,11 +1,8 @@
 import { Message } from "discord.js";
 import { prisma } from "../../prisma/client";
-import {
-  addExperience,
-  extractUserIdFromMention,
-  hasPermissions,
-  removeExperience,
-} from "../../services/utils";
+import { extractUserIdFromMention } from "../../services/utils";
+import { hasPermissions } from "../../services/user";
+import { addExperience, removeExperience } from "../../services/levels";
 
 module.exports = {
   name: "addexp",

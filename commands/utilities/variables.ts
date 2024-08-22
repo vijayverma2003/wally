@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import variablesEmbed from "../../embeds/variables";
-import { hasPermissions } from "../../services/utils";
+import { hasPermissions } from "../../services/user";
 
 module.exports = {
   name: "variables",

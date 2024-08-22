@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 import { prisma } from "../../prisma/client";
-import { extractRoleIdFromMention, hasPermissions } from "../../services/utils";
+import { extractRoleIdFromMention } from "../../services/utils";
+import { hasPermissions } from "../../services/user";
 
 module.exports = {
   name: "levelrole-add",
