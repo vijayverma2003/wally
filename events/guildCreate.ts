@@ -7,7 +7,7 @@ module.exports = {
   async execute(client: DiscordClient, guild: Guild) {
     try {
       await prisma.guild.create({
-        data: { guildId: guild.id, sendLevelUpMessage: false },
+        data: { guildId: guild.id },
       });
     } catch (error) {
       console.log("Event - Guild Create", error);

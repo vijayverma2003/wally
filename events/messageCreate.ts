@@ -55,7 +55,12 @@ module.exports = {
 
         if (levelUp) {
           const levelRole = await prisma.levelRole.findUnique({
-            where: { guildId: message.guild.id, level: guildUser.level + 1 },
+            where: {
+              guildId_level: {
+                level: guildUser.level + 1,
+                guildId: message.guildId!,
+              },
+            },
           });
 
           if (levelRole)

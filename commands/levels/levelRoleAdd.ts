@@ -36,7 +36,12 @@ module.exports = {
       }
 
       const levelRole = await prisma.levelRole.findUnique({
-        where: { level: parseInt(level), guildId: message.guildId! },
+        where: {
+          guildId_level: {
+            level: parseInt(level),
+            guildId: message.guildId!,
+          },
+        },
       });
 
       if (!levelRole)
@@ -49,7 +54,12 @@ module.exports = {
         });
       else
         await prisma.levelRole.update({
-          where: { level: parseInt(level), guildId: message.guildId! },
+          where: {
+            guildId_level: {
+              level: parseInt(level),
+              guildId: message.guildId!,
+            },
+          },
           data: {
             roleId: guildRole.id,
           },

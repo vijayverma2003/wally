@@ -11,14 +11,13 @@ datasource db {
 }
 
 model Guild {
-  guildId            String      @id
-  prefix             String      @default("!")
-  sendLevelUpMessage Boolean     @default(false)
-  levelUpMessage     String?
-  levelRoleMessage   String?
-  levelUpChannelId   String?
-  GuildUser          GuildUser[]
-  LevelRole          LevelRole[]
+  guildId          String      @id
+  prefix           String      @default("!")
+  levelUpMessage   String?
+  levelRoleMessage String?
+  levelUpChannelId String?
+  GuildUser        GuildUser[]
+  LevelRole        LevelRole[]
 }
 
 model GuildUser {
@@ -34,5 +33,7 @@ model LevelRole {
   guildId String
   guild   Guild  @relation(references: [guildId], fields: [guildId])
   roleId  String
-  level   Int    @unique
+  level   Int
+
+  @@unique([guildId, level])
 }
