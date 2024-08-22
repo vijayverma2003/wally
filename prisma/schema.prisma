@@ -12,7 +12,6 @@ datasource db {
 
 model Guild {
   guildId          String      @id
-  prefix           String      @default("!")
   levelUpMessage   String?
   levelRoleMessage String?
   levelUpChannelId String?
