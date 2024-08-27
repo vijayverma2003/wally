@@ -29,7 +29,9 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setColor(0x8b93ff)
         .setTitle(`${emojis.roles} Level Roles`)
-        .setDescription(mappedLevelRoles)
+        .setDescription(
+          mappedLevelRoles || "No level roles found! Use `!help` for more info."
+        )
         .setTimestamp(Date.now());
 
       await message.channel.send({

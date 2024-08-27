@@ -24,7 +24,7 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle(`${emojis.ranking} Rank Leaderboard`)
         .setColor(0x8b93ff)
-        .setDescription(mappedUsers)
+        .setDescription(mappedUsers || "No users found on leaderboard")
         .setTimestamp(Date.now());
 
       await message.channel.send({

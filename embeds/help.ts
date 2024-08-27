@@ -17,12 +17,12 @@ ${
 - \`${prefix}addexp\` ${emojis.whiteArrow} Add or remove level experience to/from a user
 
 - \`${prefix}levelrole-list\` ${emojis.whiteArrow} Lists all level roles
-- \`${prefix}levelrole-add\` ${emojis.whiteArrow} Add a level role
-- \`${prefix}levelrole-remove\` ${emojis.whiteArrow} Remove a level role
+- \`${prefix}levelrole-add [level] [role]\` ${emojis.whiteArrow} Add a level role
+- \`${prefix}levelrole-remove [level]\` ${emojis.whiteArrow} Remove a level role
 
-- \`${prefix}set-levelup-channel\` ${emojis.whiteArrow} Set a channel for level up log messages
-- \`${prefix}set-levelup-message\` ${emojis.whiteArrow} Set a message to be sent when a user reaches a new level
-- \`${prefix}set-levelup-rolemessage\` ${emojis.whiteArrow} Set a message to be sent when a user reaches a new level and receives a role
+- \`${prefix}set-levelup-channel [channel]\` ${emojis.whiteArrow} Set a channel for level up log messages
+- \`${prefix}set-levelup-message [message]\` ${emojis.whiteArrow} Set a message to be sent when a user reaches a new level
+- \`${prefix}set-levelup-rolemessage [message]\` ${emojis.whiteArrow} Set a message to be sent when a user reaches a new level and receives a role
 - \`${prefix}variables\` ${emojis.whiteArrow} View all variables for custom messages
 `
     : ""
