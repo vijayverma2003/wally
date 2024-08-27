@@ -1,6 +1,6 @@
 import { Events, Guild } from "discord.js";
-import { prisma } from "../prisma/client";
-import { DiscordClient } from "../types/main";
+import { prisma } from "../../prisma/client";
+import { DiscordClient } from "../../types/main";
 
 module.exports = {
   name: Events.GuildCreate,

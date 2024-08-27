@@ -1,13 +1,13 @@
 import { Events, Message } from "discord.js";
-import { prefix } from "..";
-import { prisma } from "../prisma/client";
-import { levelUpMessage } from "../services/levels";
-import { assignRole } from "../services/user";
+import { prefix } from "../..";
+import { prisma } from "../../prisma/client";
 import {
   expRequiredToReachNextLevel,
   getRandomNumberInRange,
-} from "../services/utils";
-import { DiscordClient } from "../types/main";
+} from "../../services/utils";
+import { DiscordClient } from "../../types/main";
+import { levelUpMessage } from "../../services/levels";
+import { assignRole } from "../../services/user";
 
 module.exports = {
   name: Events.MessageCreate,

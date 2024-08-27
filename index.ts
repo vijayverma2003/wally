@@ -21,23 +21,28 @@ const client: DiscordClient = new Client({
 client.commands = new Collection<string, any>();
 
 const eventsPath = path.join(__dirname, "events");
-const eventFiles = fs.readdirSync(eventsPath);
+const eventFolders = fs.readdirSync(eventsPath);
 
-for (let file of eventFiles) {
-  const filePath = path.join(eventsPath, file);
-  const event = require(filePath);
+for (let folder of eventFolders) {
+  const folderPath = path.join(eventsPath, folder);
+  const eventFiles = fs.readdirSync(folderPath);
 
-  if (!("name" in event) || !("execute" in event)) {
-    console.log(
-      `[WARNING] - Name property or execute method is missing in the event.`
-    );
+  for (let file of eventFiles) {
+    const filePath = path.join(folderPath, file);
+    const event = require(filePath);
 
-    continue;
+    if (!("name" in event) || !("execute" in event)) {
+      console.log(
+        `[WARNING] - Name property or execute method is missing in the event.`
+      );
+
+      continue;
+    }
+
+    if (event.once) {
+      client.once(event.name, (...args) => event.execute(...args));
+    } else client.on(event.name, (...args) => event.execute(client, ...args));
   }
-
-  if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args));
-  } else client.on(event.name, (...args) => event.execute(client, ...args));
 }
 
 const commandsFolderPath = path.join(__dirname, "commands");

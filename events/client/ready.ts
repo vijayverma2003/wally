@@ -1,5 +1,5 @@
 import { Client, Events } from "discord.js";
-import { scanAndCreateGuilds } from "../services/guild";
+import { scanAndCreateGuilds } from "../../services/guild";
 
 module.exports = {
   name: Events.ClientReady,
