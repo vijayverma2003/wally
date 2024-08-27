@@ -15,7 +15,7 @@ module.exports = {
       const mappedUsers = users
         .map(
           (user, index) =>
-            `> ${index + 1}. <@${user.id}> ${emojis.whiteArrow} \`${
+            `> ${index + 1}. <@${user.userId}> ${emojis.whiteArrow} \`${
               user.level
             }\`\n`
         )

@@ -35,7 +35,7 @@ export const levelUpMessage = (
   const placeHolderArgs = {
     level: user.level + 1,
 
-    userId: `<@${user.id}>`,
+    userId: `<@${user.userId}>`,
   };
 
   return levelRole && guild.levelRoleMessage
@@ -45,7 +45,7 @@ export const levelUpMessage = (
       })
     : guild.levelUpMessage
     ? replacePlaceHolders(guild.levelUpMessage, placeHolderArgs)
-    : `Congratulations <@${user.id}>, you reached level ${user.level + 1}!`;
+    : `Congratulations <@${user.userId}>, you reached level ${user.level + 1}!`;
 };
 
 export function addExperience(guildUser: GuildUser, exp: number) {

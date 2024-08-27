@@ -20,12 +20,14 @@ module.exports = {
       }
 
       let user = await prisma.guildUser.findUnique({
-        where: { id_guildId: { id: member.id, guildId: message.guildId! } },
+        where: {
+          userId_guildId: { userId: member.id, guildId: message.guildId! },
+        },
       });
 
       if (!user) {
         user = await prisma.guildUser.create({
-          data: { id: member.id, guildId: message.guildId! },
+          data: { userId: member.id, guildId: message.guildId! },
         });
       }
 
@@ -34,7 +36,7 @@ module.exports = {
         orderBy: [{ level: "desc" }, { experience: "desc" }],
       });
 
-      const index = users.findIndex((u) => u.id === user.id);
+      const index = users.findIndex((u) => u.userId === user.userId);
 
       await message.channel.send({
         embeds: [rankEmbed(member, user, index + 1)],
