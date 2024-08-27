@@ -29,7 +29,7 @@ module.exports = {
 
         try {
           let guildUser = await prisma.guildUser.findUnique({
-            where: { id: id },
+            where: { id_guildId: { id, guildId: message.guildId! } },
           });
 
           if (!guildUser)
@@ -43,7 +43,7 @@ module.exports = {
               : removeExperience(guildUser, experienceAmount);
 
           await prisma.guildUser.update({
-            where: { guildId: message.guildId!, id: guildUser.id },
+            where: { id_guildId: { id, guildId: message.guildId! } },
             data: {
               level,
               experience,

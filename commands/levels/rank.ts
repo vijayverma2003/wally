@@ -20,7 +20,7 @@ module.exports = {
       }
 
       let user = await prisma.guildUser.findUnique({
-        where: { id: member.id },
+        where: { id_guildId: { id: member.id, guildId: message.guildId! } },
       });
 
       if (!user) {

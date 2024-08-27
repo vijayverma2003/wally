@@ -25,7 +25,9 @@ module.exports = {
       if (!guild) return;
 
       const guildUser = await prisma.guildUser.findUnique({
-        where: { id: message.author.id },
+        where: {
+          id_guildId: { id: message.author.id, guildId: message.guildId! },
+        },
       });
 
       if (!guildUser) {
@@ -46,7 +48,9 @@ module.exports = {
         // Update User - Add Experience
 
         await prisma.guildUser.update({
-          where: { id: message.author.id },
+          where: {
+            id_guildId: { id: message.author.id, guildId: message.guildId! },
+          },
           data: {
             experience: levelUp ? 1 : updatedExp,
             level: levelUp ? guildUser.level + 1 : guildUser.level,
