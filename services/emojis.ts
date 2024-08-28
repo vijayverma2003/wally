@@ -31,7 +31,7 @@ const developmentEmojis: Emojis = {
   settings: "<:settings:1271053403816198217>",
   roles: "<:roles:1271070087620857968>",
   levelup: "<:levelup:1271053362879533162>",
-  leaderboard: "<:leaderboard:1271053345359921194>",
+  leaderboard: "<:leaderboard:1278307221373190164>",
   help: "<:help:1271347266250346567>",
   whiteArrow: "<:arrow:1271068548130668637>",
   blueArrow: "<:arrows:1271066698400661614>",
