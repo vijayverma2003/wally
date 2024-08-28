@@ -1,14 +1,16 @@
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
+import ms from "ms";
 import fs from "node:fs";
 import path from "node:path";
+import { scanTempRoles } from "./services/roles";
 import { DiscordClient } from "./types/main";
 
 config();
 
 export const prefix = "!";
 
-const client: DiscordClient = new Client({
+export const client: DiscordClient = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -100,3 +102,5 @@ process.on("uncaughtExceptionMonitor", async (error, origin) => {
 });
 
 client.login(process.env.DISCORD_TOKEN!).catch(console.error);
+
+setInterval(scanTempRoles, ms("1 minute"));

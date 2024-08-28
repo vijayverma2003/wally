@@ -21,10 +21,11 @@ model Guild {
 
 model GuildUser {
   userId     String
-  level      Int    @default(1)
-  experience Int    @default(0)
+  level      Int        @default(1)
+  experience Int        @default(0)
   guildId    String
-  guild      Guild  @relation(references: [guildId], fields: [guildId])
+  guild      Guild      @relation(references: [guildId], fields: [guildId])
+  TempRole   TempRole[]
 
   @@id([userId, guildId])
 }
@@ -37,4 +38,15 @@ model LevelRole {
   level   Int
 
   @@unique([guildId, level])
+}
+
+model TempRole {
+  id        Int       @id @default(autoincrement())
+  guildId   String
+  userId    String
+  guildUser GuildUser @relation(references: [guildId, userId], fields: [guildId, userId])
+  roleId    String
+  endsAt    BigInt
+
+  @@unique([userId, roleId])
 }
