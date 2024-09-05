@@ -58,7 +58,7 @@ function levellingHelpDescription(permitted: boolean) {
 ${
   permitted
     ? `
-- \`${prefix}addexp\` ${emojis.whiteArrow} Add or remove level experience to/from a user
+- \`${prefix}addexp [amount] [...users]\` ${emojis.whiteArrow} Add or remove level experience to/from a user
 
 - \`${prefix}levelrole-list\` ${emojis.whiteArrow} Lists all level roles
 - \`${prefix}levelrole-add [level] [role]\` ${emojis.whiteArrow} Add a level role
