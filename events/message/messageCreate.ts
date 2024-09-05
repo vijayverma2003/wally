@@ -42,7 +42,7 @@ module.exports = {
           },
         });
       } else {
-        const exp = getRandomNumberInRange(1, 10);
+        const exp = getRandomNumberInRange(1, 5);
         const updatedExp = guildUser.experience + exp;
 
         const levelUp =
@@ -64,7 +64,7 @@ module.exports = {
         });
 
         if (levelUp) {
-          const levelRole = await prisma.levelRole.findUnique({
+          let levelRole = await prisma.levelRole.findUnique({
             where: {
               guildId_level: {
                 level: guildUser.level + 1,
@@ -73,8 +73,12 @@ module.exports = {
             },
           });
 
-          if (levelRole)
-            assignRole(message.guild, message.author.id, levelRole.roleId);
+          if (levelRole) {
+            const role = await message.guild.roles.fetch(levelRole?.roleId);
+            if (role)
+              assignRole(message.guild, message.author.id, levelRole.roleId);
+            else levelRole = null;
+          }
 
           if (guild.levelUpChannelId) {
             const channel = await message.guild?.channels.fetch(
