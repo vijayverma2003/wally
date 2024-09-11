@@ -43,7 +43,7 @@ module.exports = {
             },
           });
         } else {
-          const exp = getRandomNumberInRange(1, 3);
+          const exp = getRandomNumberInRange(1, 5);
           const updatedExp = guildUser.experience + exp;
 
           const levelUp =
