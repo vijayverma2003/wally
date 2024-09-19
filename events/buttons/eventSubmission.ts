@@ -43,7 +43,10 @@ module.exports = {
 
       const totalSubmissions = await prisma.eventSubmission.aggregate({
         _count: true,
-        where: { eventSubmissionSetupId: submissionSetup.id },
+        where: {
+          eventSubmissionSetupId: submissionSetup.id,
+          userId: interaction.user.id,
+        },
       });
 
       if (totalSubmissions._count >= Number(submissionSetup.maxSubmissions)) {
