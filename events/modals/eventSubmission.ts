@@ -96,9 +96,9 @@ ${submissionLink ? submissionLink : "..."}
 
         if (channel.isTextBased() && !message.hasThread) {
           message.startThread({
-            name: ".",
+            name: "Comments",
             autoArchiveDuration: ThreadAutoArchiveDuration.ThreeDays,
-            reason: "Event submission thread",
+            reason: "Comments",
           });
         }
       }
