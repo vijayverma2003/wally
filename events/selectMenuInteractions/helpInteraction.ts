@@ -38,7 +38,7 @@ module.exports = {
       }
 
       if (interaction.values[0] === "roles") {
-        embed.setTitle(`${emojis.roles} Event Submission Setup Commands`);
+        embed.setTitle(`${emojis.settings} Event Submission Setup Commands`);
         embed.setDescription(eventSubmissionHelpDescription());
       }
 
