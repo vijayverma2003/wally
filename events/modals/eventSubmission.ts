@@ -44,14 +44,15 @@ module.exports = {
         return;
       }
 
-      if (
-        submissionSetup.eventEndTimestamp &&
-        Number(submissionSetup.eventEndTimestamp) * 1000 > Date.now()
-      ) {
+      console.log(Number(submissionSetup.eventEndTimestamp), Date.now());
+
+      if (Number(submissionSetup.eventEndTimestamp) * 1000 <= Date.now()) {
         await interaction.reply({
           content: "Event has ended 😥",
           ephemeral: true,
         });
+
+        return;
       }
 
       const description = interaction.fields.getField("description").value;
@@ -89,7 +90,7 @@ ${description ? description : "..."}
 
 
 -# **Link**
-${submissionLink ? submissionLink : "..."}
+${submissionLink ? `[Submission](${submissionLink.split(" ")[0]})` : "..."}
 `);
 
         await message.react("♥️");

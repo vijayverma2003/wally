@@ -37,7 +37,7 @@ module.exports = {
 
       await message.react("✅");
     } catch (error) {
-      console.log("Error executing send-submission-setup command", error);
+      console.log("Error executing set-max-submissions command", error);
     }
   },
 };

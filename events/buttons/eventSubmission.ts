@@ -49,7 +49,10 @@ module.exports = {
         },
       });
 
-      if (totalSubmissions._count >= Number(submissionSetup.maxSubmissions)) {
+      if (
+        submissionSetup.maxSubmissions &&
+        totalSubmissions._count >= Number(submissionSetup.maxSubmissions)
+      ) {
         await interaction.reply({
           content: "You have reached the submission limit 😅",
           ephemeral: true,
