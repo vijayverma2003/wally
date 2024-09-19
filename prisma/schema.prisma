@@ -53,12 +53,25 @@ model TempRole {
 }
 
 model EventSubmissionSetup {
-  id                  Int     @id @default(autoincrement())
-  title               String  @db.VarChar(200)
-  description         String? @db.VarChar(2000)
-  submissionChannelId String  @db.VarChar(50)
-  eventEndTimestamp   String? @db.VarChar(50)
-  embedColor          String? @db.VarChar(10)
+  id                  Int               @id @default(autoincrement())
+  title               String            @db.VarChar(200)
+  description         String?           @db.VarChar(2000)
+  submissionChannelId String            @db.VarChar(50)
+  eventEndTimestamp   String?           @db.VarChar(50)
+  embedColor          String?           @db.VarChar(10)
   guildId             String
-  guild               Guild   @relation(references: [guildId], fields: [guildId])
+  guild               Guild             @relation(references: [guildId], fields: [guildId])
+  maxSubmissions      Int?
+  EventSubmission     EventSubmission[]
+}
+
+model EventSubmission {
+  id                     Int                  @id @default(autoincrement())
+  eventSubmissionSetupId Int
+  eventSubmissionSetup   EventSubmissionSetup @relation(references: [id], fields: [eventSubmissionSetupId])
+  description            String?              @db.VarChar(1000)
+  submissionLink         String?              @db.VarChar(1000)
+  userId                 String
+  channelId              String
+  messageId              String
 }

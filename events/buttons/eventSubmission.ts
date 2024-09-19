@@ -41,6 +41,20 @@ module.exports = {
 
       if (!submissionSetup) return;
 
+      const totalSubmissions = await prisma.eventSubmission.aggregate({
+        _count: true,
+        where: { eventSubmissionSetupId: submissionSetup.id },
+      });
+
+      if (totalSubmissions._count >= Number(submissionSetup.maxSubmissions)) {
+        await interaction.reply({
+          content: "You have reached the submission limit 😅",
+          ephemeral: true,
+        });
+
+        return;
+      }
+
       const modal = createEventSubmissionModal(submissionSetupId);
       interaction.showModal(modal);
     } catch (error) {

@@ -78,8 +78,10 @@ module.exports = {
         });
       }
 
+      let message;
+
       if (channel?.isTextBased() || channel?.isThread()) {
-        const message = await channel.send(`
+        message = await channel.send(`
 Submission By - ${interaction.user}
 
 -# **Description**
@@ -99,6 +101,36 @@ ${submissionLink ? submissionLink : "..."}
             reason: "Event submission thread",
           });
         }
+      }
+
+      if (!message) {
+        await interaction.reply({
+          content: "An error occured :confused:",
+          ephemeral: true,
+        });
+
+        return;
+      }
+
+      try {
+        await prisma.eventSubmission.create({
+          data: {
+            eventSubmissionSetupId: submissionSetup.id,
+            messageId: message.id,
+            channelId: message.channel.id,
+            description,
+            submissionLink,
+            userId: interaction.user.id,
+          },
+        });
+      } catch (error) {
+        await message.delete();
+        await interaction.reply({
+          content: "An error occured :confused:",
+          ephemeral: true,
+        });
+
+        return;
       }
 
       await interaction.reply({

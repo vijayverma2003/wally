@@ -89,7 +89,8 @@ function eventSubmissionHelpDescription() {
   return `
     ** **
 - \`${prefix}submission-setup\` - Creates a new submission setup. 
-- \`${prefix}send-submission-setup [id]\` - Sends submission setup for participants. 
+- \`${prefix}set-max-submissions [id] [count]\` - Sets maximum submissions. 
 - \`${prefix}delete-submission-setup [id]\` - Deletes a submission setup. 
+- \`${prefix}send-submission-setup [id]\` - Sends submission setup for participants. 
 `;
 }

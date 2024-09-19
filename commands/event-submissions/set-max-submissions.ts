@@ -3,7 +3,7 @@ import { prisma } from "../../prisma/client";
 import { hasPermissions } from "../../services/user";
 
 module.exports = {
-  name: "delete-submission-setup",
+  name: "set-max-submissions",
   async execute(message: Message, args: string[]) {
     try {
       const member = await message.guild!.members.fetch(message.author.id);
@@ -24,8 +24,15 @@ module.exports = {
         return;
       }
 
-      await prisma.eventSubmissionSetup.delete({
+      const count = args.shift();
+      if (!count || isNaN(parseInt(count))) {
+        await message.react("🚫");
+        return;
+      }
+
+      await prisma.eventSubmissionSetup.update({
         where: { id: submissionSetup.id, guildId: message.guild!.id },
+        data: { maxSubmissions: parseInt(count) },
       });
 
       await message.react("✅");
