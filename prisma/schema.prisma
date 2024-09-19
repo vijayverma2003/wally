@@ -11,12 +11,13 @@ datasource db {
 }
 
 model Guild {
-  guildId          String      @id
-  levelUpMessage   String?
-  levelRoleMessage String?
-  levelUpChannelId String?
-  GuildUser        GuildUser[]
-  LevelRole        LevelRole[]
+  guildId              String                 @id
+  levelUpMessage       String?
+  levelRoleMessage     String?
+  levelUpChannelId     String?
+  GuildUser            GuildUser[]
+  LevelRole            LevelRole[]
+  EventSubmissionEmbed EventSubmissionSetup[]
 }
 
 model GuildUser {
@@ -49,4 +50,15 @@ model TempRole {
   endsAt    BigInt
 
   @@unique([userId, roleId])
+}
+
+model EventSubmissionSetup {
+  id                  Int     @id @default(autoincrement())
+  title               String  @db.VarChar(200)
+  description         String? @db.VarChar(2000)
+  submissionChannelId String  @db.VarChar(50)
+  eventEndTimestamp   String? @db.VarChar(50)
+  embedColor          String? @db.VarChar(10)
+  guildId             String
+  guild               Guild   @relation(references: [guildId], fields: [guildId])
 }

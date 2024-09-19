@@ -27,8 +27,6 @@ module.exports = {
 
       const embed = new EmbedBuilder().setColor(0x8b93ff);
 
-      console.log(interaction.values);
-
       if (interaction.values[0] === "levelling") {
         embed.setTitle(`${emojis.leaderboard} Levelling Commands`);
         embed.setDescription(levellingHelpDescription(permitted));
@@ -37,6 +35,11 @@ module.exports = {
       if (interaction.values[0] === "roles") {
         embed.setTitle(`${emojis.roles} Roles Commands`);
         embed.setDescription(rolesHelpDescription());
+      }
+
+      if (interaction.values[0] === "roles") {
+        embed.setTitle(`${emojis.roles} Event Submission Setup Commands`);
+        embed.setDescription(eventSubmissionHelpDescription());
       }
 
       await interaction.message.edit({ embeds: [embed] });
@@ -79,5 +82,13 @@ function rolesHelpDescription() {
     ** **
 - \`${prefix}temprole [role] [duration] [...users]\` 
 -# Assigns a temporary role to a user for the specified duration. The role is automatically removed when the time expires.
+`;
+}
+
+function eventSubmissionHelpDescription() {
+  return `
+    ** **
+- \`${prefix}submission-setup\` - Create new submission setup. 
+- \`${prefix}send-submission-setup [id]\` - Send submission setup for participants. 
 `;
 }

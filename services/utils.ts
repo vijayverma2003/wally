@@ -1,4 +1,7 @@
-import { GuildUser } from "@prisma/client";
+export function isValidColor(color: string | null) {
+  if (!color) return false;
+  return /^#[0-9A-F]{6}$/i.test(color);
+}
 
 export const getRandomNumberInRange = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min) + min);

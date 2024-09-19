@@ -36,7 +36,12 @@ module.exports = {
             .setEmoji(emojis.roles)
             .setLabel("Temporary Roles")
             .setDescription("Give temporary roles to users")
-            .setValue("roles")
+            .setValue("roles"),
+          new StringSelectMenuOptionBuilder()
+            .setEmoji(emojis.roles)
+            .setLabel("Event Submissions Setup")
+            .setDescription("Setup event submissions in no time")
+            .setValue("event-submission")
         );
 
       const row =
