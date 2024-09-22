@@ -21,9 +21,6 @@ module.exports = {
       )
         return;
 
-      const member = await interaction.guild.members.fetch(interaction.user.id);
-      if (!hasPermissions(member)) return;
-
       const submissionSetupId = parseInt(
         interaction.customId.slice("event-submission-".length)
       );

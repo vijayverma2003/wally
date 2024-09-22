@@ -44,8 +44,6 @@ module.exports = {
         return;
       }
 
-      console.log(Number(submissionSetup.eventEndTimestamp), Date.now());
-
       if (Number(submissionSetup.eventEndTimestamp) * 1000 <= Date.now()) {
         await interaction.reply({
           content: "Event has ended 😥",
