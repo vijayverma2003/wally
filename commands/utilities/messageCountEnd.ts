@@ -26,12 +26,12 @@ module.exports = {
       await user?.send({ embeds: [embed] });
 
       await prisma.$transaction(async (tx) => {
-        await tx.messageCountChannel.delete({
-          where: { id: message.channelId },
-        });
-
         await tx.messageCount.deleteMany({
           where: { messageCountChannelId: message.channelId },
+        });
+
+        await tx.messageCountChannel.delete({
+          where: { id: message.channelId },
         });
       });
 
