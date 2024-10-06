@@ -15,6 +15,40 @@ module.exports = {
     if (message.channel.isDMBased() || message.author.bot || !message.guild)
       return;
 
+    try {
+      const channel = await prisma.messageCountChannel.findUnique({
+        where: { id: message.channelId },
+      });
+
+      if (channel) {
+        const user = await prisma.messageCount.findUnique({
+          where: {
+            userId: message.author.id,
+            messageCountChannelId: message.channelId,
+          },
+        });
+
+        if (!user)
+          await prisma.messageCount.create({
+            data: {
+              userId: message.author.id,
+              messageCountChannelId: message.channelId,
+              count: 1,
+            },
+          });
+        else
+          await prisma.messageCount.create({
+            data: {
+              userId: message.author.id,
+              messageCountChannelId: message.channelId,
+              count: user.count + 1,
+            },
+          });
+      }
+    } catch (error) {
+      console.log("Setting message count", error);
+    }
+
     // Update User Experience and Level
 
     if (!message.channel.isThread()) {
