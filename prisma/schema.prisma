@@ -75,3 +75,15 @@ model EventSubmission {
   channelId              String
   messageId              String
 }
+
+model MessageCountChannel {
+  id           String         @id
+  MessageCount MessageCount[]
+}
+
+model MessageCount {
+  userId                String              @id
+  count                 Int                 @default(0)
+  messageCountChannelId String
+  MessageCountChannel   MessageCountChannel @relation(fields: [messageCountChannelId], references: [id])
+}
