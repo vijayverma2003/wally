@@ -37,10 +37,12 @@ module.exports = {
             },
           });
         else
-          await prisma.messageCount.create({
-            data: {
+          await prisma.messageCount.update({
+            where: {
               userId: message.author.id,
               messageCountChannelId: message.channelId,
+            },
+            data: {
               count: user.count + 1,
             },
           });
