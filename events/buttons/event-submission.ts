@@ -1,17 +1,16 @@
 import {
   ActionRowBuilder,
   ButtonInteraction,
-  Events,
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js";
-import { DiscordClient } from "../../types/main";
-import { hasPermissions } from "../../services/user";
+import { ButtonExecute } from ".";
 import { prisma } from "../../prisma/client";
+import { DiscordClient } from "../../types/main";
 
-module.exports = {
-  name: Events.InteractionCreate,
+export default {
+  startsWith: "event-submission-",
   async execute(client: DiscordClient, interaction: ButtonInteraction) {
     try {
       if (
@@ -64,7 +63,7 @@ module.exports = {
       console.log("Error - New Submission Setup Button Interaction", error);
     }
   },
-};
+} as ButtonExecute;
 
 function createEventSubmissionModal(id: number) {
   const modal = new ModalBuilder()

@@ -23,14 +23,13 @@ export const client: DiscordClient = new Client({
 client.commands = new Collection<string, any>();
 
 const eventsPath = path.join(__dirname, "events");
-const eventFolders = fs.readdirSync(eventsPath);
+const eventFiles = fs.readdirSync(eventsPath);
 
-for (let folder of eventFolders) {
-  const folderPath = path.join(eventsPath, folder);
-  const eventFiles = fs.readdirSync(folderPath);
+for (let file of eventFiles) {
+  if (file.endsWith(".ts") || file.endsWith(".js")) {
+    const filePath = path.join(eventsPath, file);
+    console.log(filePath);
 
-  for (let file of eventFiles) {
-    const filePath = path.join(folderPath, file);
     const event = require(filePath);
 
     if (!("name" in event) || !("execute" in event)) {
@@ -44,7 +43,7 @@ for (let folder of eventFolders) {
     if (event.once) {
       client.once(event.name, (...args) => event.execute(...args));
     } else client.on(event.name, (...args) => event.execute(client, ...args));
-  }
+  } else continue;
 }
 
 const commandsFolderPath = path.join(__dirname, "commands");
@@ -68,6 +67,8 @@ for (let folder of commandsFolder) {
     }
   }
 }
+
+console.log("hello");
 
 process.on("unhandledRejection", async (error: any) => {
   try {

@@ -1,11 +1,12 @@
-import { EmbedBuilder, Events, StringSelectMenuInteraction } from "discord.js";
-import { DiscordClient } from "../../types/main";
+import { EmbedBuilder, StringSelectMenuInteraction } from "discord.js";
+import { SelectMenuExecute } from ".";
 import { prefix } from "../..";
 import emojis from "../../services/emojis";
 import { hasPermissions } from "../../services/user";
+import { DiscordClient } from "../../types/main";
 
-module.exports = {
-  name: Events.InteractionCreate,
+export default {
+  startsWith: "help_",
   async execute(
     client: DiscordClient,
     interaction: StringSelectMenuInteraction
@@ -51,7 +52,7 @@ module.exports = {
       );
     }
   },
-};
+} as SelectMenuExecute;
 
 function levellingHelpDescription(permitted: boolean) {
   return `

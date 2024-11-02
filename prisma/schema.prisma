@@ -18,6 +18,7 @@ model Guild {
   GuildUser            GuildUser[]
   LevelRole            LevelRole[]
   EventSubmissionEmbed EventSubmissionSetup[]
+  ModelMakerSetup      ModelMakerSetup[]
 }
 
 model GuildUser {
@@ -86,4 +87,28 @@ model MessageCount {
   count                 Int                 @default(0)
   messageCountChannelId String
   MessageCountChannel   MessageCountChannel @relation(fields: [messageCountChannelId], references: [id])
+}
+
+model ModelMakerSetup {
+  guildId      String @id
+  guild        Guild  @relation(fields: [guildId], references: [guildId])
+  logChannel   String
+  roleToAssign String
+  guidelines   String @db.VarChar(4000)
+}
+
+model ModelMakerSubmission {
+  id           Int      @id @default(autoincrement())
+  userId       String
+  guildId      String?
+  technology   String?
+  extraction   String?
+  modelName    String?
+  epochs       Int?
+  modelLink    String?  @db.VarChar(1000)
+  demoFileLink String?  @db.VarChar(1000)
+  imageLink    String?  @db.VarChar(1000)
+  notes        String?  @db.VarChar(1000)
+  startedAt    DateTime @default(now())
+  submitted    Boolean?
 }

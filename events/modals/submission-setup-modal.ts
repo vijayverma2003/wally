@@ -1,15 +1,15 @@
 import {
   ColorResolvable,
   EmbedBuilder,
-  Events,
-  ModalSubmitInteraction,
+  ModalSubmitInteraction
 } from "discord.js";
+import { ModalSubmitExecute } from ".";
 import { prisma } from "../../prisma/client";
 import { isValidColor } from "../../services/utils";
 import { DiscordClient } from "../../types/main";
 
-module.exports = {
-  name: Events.InteractionCreate,
+export default {
+  customId: "submission-setup-modal",
   async execute(client: DiscordClient, interaction: ModalSubmitInteraction) {
     try {
       if (
@@ -65,4 +65,4 @@ module.exports = {
       );
     }
   },
-};
+} as ModalSubmitExecute;

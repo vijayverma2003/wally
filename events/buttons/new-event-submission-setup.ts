@@ -1,16 +1,16 @@
 import {
   ActionRowBuilder,
   ButtonInteraction,
-  Events,
   ModalBuilder,
   TextInputBuilder,
-  TextInputStyle,
+  TextInputStyle
 } from "discord.js";
-import { DiscordClient } from "../../types/main";
+import { ButtonExecute } from ".";
 import { hasPermissions } from "../../services/user";
+import { DiscordClient } from "../../types/main";
 
-module.exports = {
-  name: Events.InteractionCreate,
+export default {
+  customId: "new-submission-setup",
   async execute(client: DiscordClient, interaction: ButtonInteraction) {
     try {
       if (
@@ -29,7 +29,7 @@ module.exports = {
       console.log("Error - New Submission Setup Button Interaction", error);
     }
   },
-};
+} as ButtonExecute;
 
 function createSubmissionSetupModal() {
   const modal = new ModalBuilder()

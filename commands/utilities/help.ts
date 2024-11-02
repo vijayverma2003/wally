@@ -6,10 +6,9 @@ import {
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
 } from "discord.js";
-import helpEmbed from "../../embeds/help";
-import { hasPermissions } from "../../services/user";
-import emojis from "../../services/emojis";
 import { client } from "../..";
+import emojis from "../../services/emojis";
+import { hasPermissions } from "../../services/user";
 
 module.exports = {
   name: "help",
@@ -38,7 +37,6 @@ module.exports = {
             .setDescription("Give temporary roles to users")
             .setValue("roles"),
           new StringSelectMenuOptionBuilder()
-            .setEmoji(emojis.settings)
             .setLabel("Event Submissions Setup")
             .setDescription("Setup event submissions in no time")
             .setValue("event-submission")

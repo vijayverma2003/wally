@@ -1,13 +1,10 @@
-import {
-  Events,
-  ModalSubmitInteraction,
-  ThreadAutoArchiveDuration,
-} from "discord.js";
+import { ModalSubmitInteraction, ThreadAutoArchiveDuration } from "discord.js";
+import { ModalSubmitExecute } from ".";
 import { prisma } from "../../prisma/client";
 import { DiscordClient } from "../../types/main";
 
-module.exports = {
-  name: Events.InteractionCreate,
+export default {
+  startsWith: "event-submission-modal-",
   async execute(client: DiscordClient, interaction: ModalSubmitInteraction) {
     try {
       if (
@@ -44,7 +41,10 @@ module.exports = {
         return;
       }
 
-      if (Number(submissionSetup.eventEndTimestamp) * 1000 <= Date.now()) {
+      if (
+        submissionSetup.eventEndTimestamp &&
+        Number(submissionSetup.eventEndTimestamp) * 1000 <= Date.now()
+      ) {
         await interaction.reply({
           content: "Event has ended 😥",
           ephemeral: true,
@@ -140,4 +140,4 @@ ${submissionLink ? `[Submission](${submissionLink.split(" ")[0]})` : "..."}
       console.log("Error - EventSubmission - ModalSubmitInteraction", error);
     }
   },
-};
+} as ModalSubmitExecute;
