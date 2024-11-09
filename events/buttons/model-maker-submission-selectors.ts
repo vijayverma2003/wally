@@ -21,7 +21,11 @@ export default {
         interaction.customId === "modelmaker-submit"
       ) {
         const submission = await prisma.modelMakerSubmission.create({
-          data: { userId: interaction.user.id, guildId: interaction.guildId },
+          data: {
+            userId: interaction.user.id,
+            guildId: interaction.guildId,
+            startedAt: new Date(),
+          },
         });
 
         const technologySelector = new StringSelectMenuBuilder()

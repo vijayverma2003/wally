@@ -98,15 +98,15 @@ model ModelMakerSetup {
 }
 
 model ModelMakerSubmission {
-  id           Int      @id @default(autoincrement())
-  userId       String
-  guildId      String?
-  technology   String?
-  extraction   String?
-  modelName    String?
-  epochs       Int?
-  modelLink    String?  @db.VarChar(1000)
-  notes        String?  @db.VarChar(1000)
-  startedAt    DateTime @default(now())
-  submitted    Boolean?
+  id         Int      @id @default(autoincrement())
+  userId     String
+  guildId    String?
+  technology String?
+  extraction String?
+  modelName  String?
+  epochs     Int?
+  modelLink  String?  @db.VarChar(1000)
+  notes      String?  @db.VarChar(1000)
+  startedAt  DateTime
+  submitted  Boolean?
 }
