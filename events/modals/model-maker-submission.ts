@@ -74,10 +74,8 @@ export default {
         return;
       }
 
-      console.log([...modelLink]);
       const urlPattern = /https:\/\/www\.weights\.gg\/models\/[a-zA-Z0-9]+/;
       const validPattern = urlPattern.test(modelLink);
-      console.log(validPattern);
 
       if (!validPattern) {
         await interaction.reply({

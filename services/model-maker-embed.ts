@@ -5,7 +5,7 @@ export default function createModelMakerEmbed(
   user: User,
   submission: ModelMakerSubmission
 ) {
-  return new EmbedBuilder()
+  const embed = new EmbedBuilder()
     .setColor(0x8b93ff)
     .setAuthor({
       iconURL: user.displayAvatarURL(),
@@ -14,19 +14,16 @@ export default function createModelMakerEmbed(
     .setTitle(`New Model Submission`)
     .setDescription(
       `
-** **                  
-**Epoch Count** - ${submission.epochs ?? "N/A"}
-
+**Model Name** - ${submission.modelName}
+**Technology** - ${submission.technology}
+**Extraction** - ${submission.extraction}
+**Epochs** - ${submission.epochs}
 **Model Link** - ${submission.modelLink}
-
-**Additional Notes**
--# ${submission.notes ?? "N/A"}
-`
-    )
-    .addFields(
-      { name: "Model Name", value: submission.modelName ?? "N/A" },
-      { name: "Technology", value: submission.technology ?? "N/A" },
-      { name: "Extraction", value: submission.extraction ?? "N/A" }
+      `
     )
     .setTimestamp(new Date());
+
+  if (submission.notes) embed.setFooter({ text: submission.notes });
+
+  return embed;
 }
