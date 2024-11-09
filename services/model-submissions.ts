@@ -5,7 +5,7 @@ export async function clearSubmissions() {
   try {
     const response = await prisma.modelMakerSubmission.deleteMany({
       where: {
-        startedAt: { gte: new Date(Date.now() - ms("24 hours")) },
+        startedAt: { lte: new Date(Date.now() - ms("24 hours")) },
         submitted: null,
       },
     });

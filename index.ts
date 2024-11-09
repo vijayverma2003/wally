@@ -103,4 +103,4 @@ process.on("uncaughtExceptionMonitor", async (error, origin) => {
 client.login(process.env.DISCORD_TOKEN!).catch(console.error);
 
 setInterval(scanTempRoles, ms("1 minute"));
-setInterval(clearSubmissions, ms("1 minutes"));
+setInterval(clearSubmissions, ms("10 minutes"));
