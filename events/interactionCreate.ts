@@ -9,22 +9,19 @@ module.exports = {
   async execute(client: DiscordClient, interaction: Interaction) {
     try {
       if (!interaction.guildId) return;
-      console.log(interaction.type);
+
       if (interaction.isButton()) {
-        console.log(interaction.customId);
         for (let button of buttons) {
           if (
             button.startsWith &&
             interaction.customId.startsWith(button.startsWith)
           ) {
-            console.log("if");
             button.execute(client, interaction);
             break;
           } else if (
             button.customId &&
             interaction.customId === button.customId
           ) {
-            console.log("else if");
             button.execute(client, interaction);
             break;
           }

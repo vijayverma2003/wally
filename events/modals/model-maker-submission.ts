@@ -2,12 +2,12 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  EmbedBuilder,
   MessageActionRowComponentBuilder,
   ModalSubmitInteraction,
 } from "discord.js";
 import { ModalSubmitExecute } from ".";
 import { prisma } from "../../prisma/client";
+import createModelMakerEmbed from "../../services/model-maker-embed";
 import { DiscordClient } from "../../types/main";
 
 export default {
@@ -36,7 +36,7 @@ export default {
         return;
       }
 
-      const submission = await prisma.modelMakerSubmission.findUnique({
+      let submission = await prisma.modelMakerSubmission.findUnique({
         where: { id },
       });
 
@@ -62,23 +62,37 @@ export default {
 
       const name = interaction.fields.getField("name").value;
       const epoch = interaction.fields.getField("epoch").value;
-      const demoLink = interaction.fields.getField("demo-link").value;
-      const imageLink = interaction.fields.getField("image-link").value;
+      const notes = interaction.fields.getField("notes").value;
       const modelLink = interaction.fields.getField("model-link").value;
 
       const epochAsNumber = parseInt(epoch);
       if (!epochAsNumber || isNaN(epochAsNumber)) {
-        await interaction.reply("Invalid Epoch Value");
+        await interaction.reply({
+          content: "Invalid Epoch Value",
+          ephemeral: true,
+        });
         return;
       }
 
-      await prisma.modelMakerSubmission.update({
+      console.log([...modelLink]);
+      const urlPattern = /https:\/\/www\.weights\.gg\/models\/[a-zA-Z0-9]+/;
+      const validPattern = urlPattern.test(modelLink);
+      console.log(validPattern);
+
+      if (!validPattern) {
+        await interaction.reply({
+          content: "Model link should be a valid Weights.gg Model Link!",
+          ephemeral: true,
+        });
+        return;
+      }
+
+      submission = await prisma.modelMakerSubmission.update({
         where: { id },
         data: {
           modelName: name,
           epochs: parseInt(epoch),
-          demoFileLink: demoLink,
-          imageLink,
+          notes,
           modelLink,
         },
       });
@@ -101,33 +115,7 @@ export default {
           modelMakerSetup.logChannel
         );
 
-        const logEmbed = new EmbedBuilder()
-          .setColor(0x8b93ff)
-          .setAuthor({
-            iconURL: interaction.user.displayAvatarURL(),
-            name: interaction.user.username,
-          })
-          .setTitle(`New Model Submission`)
-          .setThumbnail(imageLink)
-          .setDescription(
-            `
-** **                  
-**Model Name** - ${name}
-
-**Technology** - ${submission.technology}
-
-**Extraction** - ${submission.extraction}
-
-**Number of Epoch** - ${epoch}
-
-**Demo Link** 
--# ${demoLink}
-
-**Model Link** 
--# ${modelLink}
-`
-          )
-          .setTimestamp(new Date());
+        const logEmbed = createModelMakerEmbed(interaction.user, submission);
 
         const acceptButton = new ButtonBuilder()
           .setLabel("Accept")
@@ -165,7 +153,7 @@ export default {
         console.log("Error logging submission in the channel", error);
       }
     } catch (error) {
-      console.log("Error submitting model maker conf modal", error);
+      console.log("Error submitting model maker submission", error);
     }
   },
 } as ModalSubmitExecute;

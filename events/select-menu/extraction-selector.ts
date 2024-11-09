@@ -67,9 +67,7 @@ export default {
     
     - **Model Name**: Enter the unique name of your model.            
     - **Epochs**: Specify the total epochs used in training.
-    - **Model Link**: Provide the Hugging Face link to your model file.
-    - **Demo File Link**: Share a link to a demo showcasing your model's output.
-    - **Image Link**: Attach a link to an image representing your model.
+    - **Model Link**: Provide the Weights.gg link to your model file.
     `
           )
           .setFooter({

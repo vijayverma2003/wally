@@ -66,24 +66,17 @@ export default {
 
       const modelLinkInput = new TextInputBuilder()
         .setCustomId("model-link")
-        .setLabel("Model Link (Huggingface Links only)")
+        .setLabel("Model Link (Weights.gg Links only)")
         .setMaxLength(1000)
         .setRequired(true)
         .setStyle(TextInputStyle.Short);
 
-      const imageLinkInput = new TextInputBuilder()
-        .setCustomId("image-link")
-        .setLabel("Image Link")
+      const notesInput = new TextInputBuilder()
+        .setCustomId("notes")
+        .setLabel("Is there something else you want to share?")
         .setMaxLength(1000)
-        .setRequired(true)
-        .setStyle(TextInputStyle.Short);
-
-      const demoLinkInput = new TextInputBuilder()
-        .setCustomId("demo-link")
-        .setLabel("Demo Link")
-        .setMaxLength(1000)
-        .setRequired(true)
-        .setStyle(TextInputStyle.Short);
+        .setRequired(false)
+        .setStyle(TextInputStyle.Paragraph);
 
       const row1 = new ActionRowBuilder<TextInputBuilder>().addComponents(
         nameInput
@@ -95,13 +88,10 @@ export default {
         modelLinkInput
       );
       const row4 = new ActionRowBuilder<TextInputBuilder>().addComponents(
-        imageLinkInput
-      );
-      const row5 = new ActionRowBuilder<TextInputBuilder>().addComponents(
-        demoLinkInput
+        notesInput
       );
 
-      form.addComponents(row1, row2, row3, row4, row5);
+      form.addComponents(row1, row2, row3, row4);
 
       await interaction.showModal(form);
     } catch (error) {

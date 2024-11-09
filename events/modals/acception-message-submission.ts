@@ -1,7 +1,12 @@
-import { EmbedBuilder, ModalSubmitInteraction } from "discord.js";
+import {
+  EmbedBuilder,
+  ModalSubmitInteraction,
+  PermissionFlagsBits,
+} from "discord.js";
 import { ModalSubmitExecute } from ".";
 import { prisma } from "../../prisma/client";
 import { DiscordClient } from "../../types/main";
+import { hasPermissions } from "../../services/user";
 
 export default {
   startsWith: "acception-message-",
@@ -11,6 +16,17 @@ export default {
         !interaction.guildId ||
         !interaction.isModalSubmit() ||
         !interaction.customId.startsWith("acception-message-")
+      )
+        return;
+
+      const member = await interaction.guild?.members.fetch(
+        interaction.user.id
+      );
+      if (!member) return;
+
+      if (
+        !hasPermissions(member) ||
+        !member.permissions.has(PermissionFlagsBits.BanMembers)
       )
         return;
 
@@ -62,8 +78,7 @@ export default {
           iconURL: interaction.user.displayAvatarURL(),
           name: interaction.user.username,
         })
-        .setTitle(`Your model has been accepted! :partying_face:`)
-        .setThumbnail(submission.imageLink)
+        .setTitle(`Your model has been accepted!`)
         .setDescription(
           `
 ** **                  
@@ -80,7 +95,6 @@ export default {
 
       if (message) {
         const user = await interaction.guild?.members.fetch(submission.userId);
-        console.log(user?.user.username);
 
         try {
           if (modelMakerSetup?.roleToAssign)
@@ -106,7 +120,6 @@ export default {
                 name: interaction.user.username,
               })
               .setTitle(`New Model Submission`)
-              .setThumbnail(submission.imageLink)
               .setDescription(
                 `
   ** **                  
@@ -117,9 +130,6 @@ export default {
   **Extraction** - ${submission.extraction}
   
   **Number of Epoch** - ${submission.epochs}
-  
-  **Demo Link** 
-  ${submission.demoFileLink}
   
   **Model Link** 
   ${submission.modelLink}

@@ -106,8 +106,6 @@ model ModelMakerSubmission {
   modelName    String?
   epochs       Int?
   modelLink    String?  @db.VarChar(1000)
-  demoFileLink String?  @db.VarChar(1000)
-  imageLink    String?  @db.VarChar(1000)
   notes        String?  @db.VarChar(1000)
   startedAt    DateTime @default(now())
   submitted    Boolean?

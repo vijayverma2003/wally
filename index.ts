@@ -28,7 +28,6 @@ const eventFiles = fs.readdirSync(eventsPath);
 for (let file of eventFiles) {
   if (file.endsWith(".ts") || file.endsWith(".js")) {
     const filePath = path.join(eventsPath, file);
-    console.log(filePath);
 
     const event = require(filePath);
 
@@ -67,8 +66,6 @@ for (let folder of commandsFolder) {
     }
   }
 }
-
-console.log("hello");
 
 process.on("unhandledRejection", async (error: any) => {
   try {

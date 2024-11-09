@@ -6,11 +6,17 @@ import {
   Message,
   MessageActionRowComponentBuilder,
 } from "discord.js";
+import { hasPermissions } from "../../services/user";
 
 module.exports = {
   name: "model-maker-setup",
   async execute(message: Message) {
     try {
+      const member = await message.guild?.members.fetch(message.author.id);
+      if (!member) return;
+
+      if (!hasPermissions(member)) return;
+
       const embed = new EmbedBuilder()
         .setTitle("Model Maker Bot Configuration")
         .setDescription(

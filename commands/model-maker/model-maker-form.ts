@@ -7,12 +7,18 @@ import {
   MessageActionRowComponentBuilder,
 } from "discord.js";
 import { prisma } from "../../prisma/client";
+import { hasPermissions } from "../../services/user";
 
 module.exports = {
   name: "model-maker-form",
   async execute(message: Message) {
     try {
       if (!message.guildId) return;
+
+      const member = await message.guild?.members.fetch(message.author.id);
+      if (!member) return;
+
+      if (!hasPermissions(member)) return;
 
       const modelMakerSetup = await prisma.modelMakerSetup.findUnique({
         where: { guildId: message.guildId },
@@ -27,9 +33,6 @@ module.exports = {
       }
 
       const embed = new EmbedBuilder()
-        .setThumbnail(
-          "https://cdn.discordapp.com/attachments/1265562525907288137/1302176623013003296/image.png?ex=672729fc&is=6725d87c&hm=7a65a29176358d54bf53b0c692a6403af56bc5b8b571ef08f0a45457acaf5085&"
-        )
         .setTitle("Model Maker Submission Portal")
         .setDescription(
           `
