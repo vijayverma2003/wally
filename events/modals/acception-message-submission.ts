@@ -24,6 +24,12 @@ export default {
       );
       if (!member) return;
 
+      console.log(
+        !hasPermissions(member),
+        !member.permissions.has(PermissionFlagsBits.BanMembers),
+        !member.roles.cache.has("1159434617451978802")
+      );
+
       if (
         !hasPermissions(member) ||
         !member.permissions.has(PermissionFlagsBits.BanMembers) ||
