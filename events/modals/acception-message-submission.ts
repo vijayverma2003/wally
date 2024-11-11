@@ -24,25 +24,24 @@ export default {
       );
       if (!member) return;
 
-      console.log(
-        !hasPermissions(member),
-        !member.permissions.has(PermissionFlagsBits.BanMembers),
-        !member.roles.cache.has("1159434617451978802")
-      );
-
       if (
         !hasPermissions(member) ||
         !member.permissions.has(PermissionFlagsBits.BanMembers) ||
         !member.roles.cache.has("1159434617451978802")
       ) {
+        console.log({
+          hasPermissions: hasPermissions(member),
+          canBanMembers: member.permissions.has(PermissionFlagsBits.BanMembers),
+          hasRequiredRole: member.roles.cache.has("1159434617451978802"),
+        });
         await interaction.reply({
           ephemeral: true,
           content: "You don't have the required permissions",
         });
 
         return;
-        return;
       }
+
       const submissionId = interaction.customId.slice(
         "acception-message-".length
       );
