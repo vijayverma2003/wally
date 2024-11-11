@@ -124,7 +124,7 @@ export default {
               .setDescription(
                 `
   ** **  
-  Submitted by - <@${submission.userId}>
+  **Submitted By** - <@${submission.userId}> (${submission.userId})
   
   **Model Name** - ${submission.modelName}
   **Technology** - ${submission.technology}

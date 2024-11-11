@@ -7,15 +7,11 @@ export default function createModelMakerEmbed(
 ) {
   const embed = new EmbedBuilder()
     .setColor(0x8b93ff)
-    .setAuthor({
-      iconURL: user.displayAvatarURL(),
-      name: user.username,
-    })
     .setTitle(`New Model Submission`)
     .setDescription(
       `
 ** **
-Submitted By - <@${user.id}>
+**Submitted By** - <@${user.id}> (${user.id})
 
 **Model Name** - ${submission.modelName}
 **Technology** - ${submission.technology}
@@ -32,8 +28,6 @@ ${
       `
     )
     .setTimestamp(new Date());
-
-  if (submission.notes) embed.setFooter({ text: submission.notes });
 
   return embed;
 }
