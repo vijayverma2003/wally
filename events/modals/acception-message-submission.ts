@@ -31,11 +31,6 @@ export default {
           member.roles.cache.has("1159434617451978802")
         )
       ) {
-        console.log({
-          hasPermissions: hasPermissions(member),
-          canBanMembers: member.permissions.has(PermissionFlagsBits.BanMembers),
-          hasRequiredRole: member.roles.cache.has("1159434617451978802"),
-        });
         await interaction.reply({
           ephemeral: true,
           content: "You don't have the required permissions",
@@ -88,19 +83,15 @@ export default {
 
       const embed = new EmbedBuilder()
         .setColor(0x8b93ff)
-        .setAuthor({
-          iconURL: interaction.user.displayAvatarURL(),
-          name: interaction.user.username,
-        })
         .setTitle(`Your model has been accepted!`)
         .setDescription(
           `
 ** **                  
 **Model Name** - ${submission.modelName}
-
 **Technology** - ${submission.technology}
-
 **Extraction** - ${submission.extraction}
+**Number of Epoch** - ${submission.epochs}
+**Model Link** - ${submission.modelLink}
 
 **Message** 
 -# ${message}
@@ -129,24 +120,17 @@ export default {
           embeds: [
             new EmbedBuilder()
               .setColor(0x8fd14f)
-              .setAuthor({
-                iconURL: interaction.user.displayAvatarURL(),
-                name: interaction.user.username,
-              })
-              .setTitle(`New Model Submission`)
+              .setTitle(`Model Submission Accepted`)
               .setDescription(
                 `
-  ** **                  
+  ** **  
+  Submitted by - <@${submission.userId}>
+  
   **Model Name** - ${submission.modelName}
-  
   **Technology** - ${submission.technology}
-  
   **Extraction** - ${submission.extraction}
-  
   **Number of Epoch** - ${submission.epochs}
-  
-  **Model Link** 
-  ${submission.modelLink}
+  **Model Link** - ${submission.modelLink}
 
   **Accepted By** - ${interaction.user}
 

@@ -14,11 +14,21 @@ export default function createModelMakerEmbed(
     .setTitle(`New Model Submission`)
     .setDescription(
       `
+** **
+Submitted By - <@${user.id}>
+
 **Model Name** - ${submission.modelName}
 **Technology** - ${submission.technology}
 **Extraction** - ${submission.extraction}
 **Epochs** - ${submission.epochs}
 **Model Link** - ${submission.modelLink}
+${
+  submission.notes
+    ? `
+** **
+-# ${submission.notes}`
+    : "** **"
+}
       `
     )
     .setTimestamp(new Date());

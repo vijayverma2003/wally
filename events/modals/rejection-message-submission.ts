@@ -77,19 +77,15 @@ export default {
 
       const embed = new EmbedBuilder()
         .setColor(0xd71313)
-        .setAuthor({
-          iconURL: interaction.user.displayAvatarURL(),
-          name: interaction.user.username,
-        })
         .setTitle(`Your model has been rejected`)
         .setDescription(
           `
 ** **                  
 **Model Name** - ${submission.modelName}
-
 **Technology** - ${submission.technology}
-
 **Extraction** - ${submission.extraction}
+**Number of Epoch** - ${submission.epochs}
+**Model Link** - ${submission.modelLink}
 
 **Message** 
 -# ${message}
@@ -112,24 +108,17 @@ export default {
           embeds: [
             new EmbedBuilder()
               .setColor(0xd71313)
-              .setAuthor({
-                iconURL: interaction.user.displayAvatarURL(),
-                name: interaction.user.username,
-              })
-              .setTitle(`New Model Submission`)
+              .setTitle(`Model Submission Rejected`)
               .setDescription(
                 `
-  ** **                  
+  ** **     
+  Submitted by - <@${submission.userId}>
+
   **Model Name** - ${submission.modelName}
-  
   **Technology** - ${submission.technology}
-  
   **Extraction** - ${submission.extraction}
-  
   **Number of Epoch** - ${submission.epochs}
-  
-  **Model Link** 
-  ${submission.modelLink}
+  **Model Link** - ${submission.modelLink}
 
   **Rejected By** - ${interaction.user}
 
