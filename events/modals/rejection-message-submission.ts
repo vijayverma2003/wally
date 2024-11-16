@@ -111,19 +111,17 @@ export default {
               .setTitle(`Model Submission Rejected`)
               .setDescription(
                 `
-  ** **     
-  **Submitted By** - <@${submission.userId}> (${submission.userId})
+** **     
+**Submitted By** - <@${submission.userId}> (${submission.userId})
 
-  **Model Name** - ${submission.modelName}
-  **Technology** - ${submission.technology}
-  **Extraction** - ${submission.extraction}
-  **Number of Epoch** - ${submission.epochs}
-  **Model Link** - ${submission.modelLink}
+**Model Name** - ${submission.modelName}
+**Technology** - ${submission.technology}
+**Extraction** - ${submission.extraction}
+**Number of Epoch** - ${submission.epochs}
+**Model Link** - ${submission.modelLink}
 
-  **Rejected By** - ${interaction.user}
-
-  **Message** 
-  ${message}
+**Rejected By** - ${interaction.user}
+**Message** - ${message}
   `
               ),
           ],

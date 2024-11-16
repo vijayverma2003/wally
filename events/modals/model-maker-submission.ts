@@ -74,12 +74,18 @@ export default {
         return;
       }
 
-      const urlPattern = /https:\/\/www\.weights\.gg\/models\/[a-zA-Z0-9]+/;
-      const validPattern = urlPattern.test(modelLink);
+      const weightsUrlPattern =
+        /https:\/\/www\.weights\.gg\/models\/[a-zA-Z0-9]+/;
+      let validPattern = weightsUrlPattern.test(modelLink);
+
+      const huggingFaceUrlPattern =
+        /https:\/\/huggingface\.co\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\/resolve\/main\/[a-zA-Z0-9._-]+\.zip/;
+      if (!validPattern) validPattern = huggingFaceUrlPattern.test(modelLink);
 
       if (!validPattern) {
         await interaction.reply({
-          content: "Model link should be a valid Weights.gg Model Link!",
+          content:
+            "Model link should be a valid Weights.gg or Huggingface Model Link!",
           ephemeral: true,
         });
         return;

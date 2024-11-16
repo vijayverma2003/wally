@@ -123,19 +123,17 @@ export default {
               .setTitle(`Model Submission Accepted`)
               .setDescription(
                 `
-  ** **  
-  **Submitted By** - <@${submission.userId}> (${submission.userId})
-  
-  **Model Name** - ${submission.modelName}
-  **Technology** - ${submission.technology}
-  **Extraction** - ${submission.extraction}
-  **Number of Epoch** - ${submission.epochs}
-  **Model Link** - ${submission.modelLink}
+** **  
+**Submitted By** - <@${submission.userId}> (${submission.userId})
 
-  **Accepted By** - ${interaction.user}
+**Model Name** - ${submission.modelName}
+**Technology** - ${submission.technology}
+**Extraction** - ${submission.extraction}
+**Number of Epoch** - ${submission.epochs}
+**Model Link** - ${submission.modelLink}
 
-  **Message** 
-  ${message}
+**Accepted By** - ${interaction.user}
+**Message** - ${message}
   `
               ),
           ],
