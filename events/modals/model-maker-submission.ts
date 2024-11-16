@@ -254,7 +254,12 @@ export default {
             data: { submitted: true },
           });
 
-          await dmChannel.send("Thanks for your submission! :blush:");
+          if (!interaction.replied) {
+            await interaction.reply({
+              content: "Thanks for your submission! :blush:",
+              ephemeral: true,
+            });
+          } else await dmChannel.send("Thanks for your submission! :blush:");
         }
       } catch (error) {
         console.log("Error logging submission in the channel", error);
