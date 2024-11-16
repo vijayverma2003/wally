@@ -66,7 +66,7 @@ export default {
 
       const modelLinkInput = new TextInputBuilder()
         .setCustomId("model-link")
-        .setLabel("Model Link (Weights.gg or Huggingface Links only)")
+        .setLabel("Model Link (Weights.gg or Huggingface Link)")
         .setMaxLength(1000)
         .setRequired(true)
         .setStyle(TextInputStyle.Short);
