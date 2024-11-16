@@ -144,7 +144,7 @@ export default {
           });
 
           const fileMessage = collected.first();
-          console.log(fileMessage);
+
           if (!fileMessage) {
             await dmChannel.send({
               embeds: [
