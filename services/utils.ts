@@ -47,3 +47,21 @@ export function expRequiredToReachNextLevel(
   if (currentExp) return currentLevel * 100 - currentExp;
   return currentLevel * 100;
 }
+
+export function getFormattedDate() {
+  const date = new Date();
+
+  const formattedDate = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    timeZone: "America/Los_Angeles",
+  }).format(date);
+
+  return formattedDate;
+}
+
+export function parseFormattedDate(formattedDate: string) {
+  const [day, month, year] = formattedDate.split("-").map(Number);
+  return new Date(day, month - 1, year);
+}

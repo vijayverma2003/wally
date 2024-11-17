@@ -26,6 +26,7 @@ model GuildUser {
   level      Int        @default(1)
   experience Int        @default(0)
   guildId    String
+  isStaff    Boolean    @default(false)
   guild      Guild      @relation(references: [guildId], fields: [guildId])
   TempRole   TempRole[]
 
@@ -109,4 +110,28 @@ model ModelMakerSubmission {
   notes      String?  @db.VarChar(1000)
   startedAt  DateTime
   submitted  Boolean?
+}
+
+model ChannelActivity {
+  id           Int    @id @default(autoincrement())
+  guildId      String
+  channelId    String
+  date         String
+  messageCount Int
+
+  @@unique([channelId, date])
+}
+
+model StaffActivity {
+  id           Int    @id @default(autoincrement())
+  guildId      String
+  userId       String
+  date         String
+  messageCount Int
+  bans         Int    @default(0)
+  kicks        Int    @default(0)
+  mutes        Int    @default(0)
+  activity     Json
+
+  @@unique([userId, date])
 }
