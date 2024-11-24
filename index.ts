@@ -6,6 +6,8 @@ import path from "node:path";
 import { scanTempRoles } from "./services/roles";
 import { DiscordClient } from "./types/main";
 import { clearSubmissions } from "./services/model-submissions";
+import cron from "node-cron";
+import { logStaffActivity } from "./services/activity-logs";
 
 config();
 
@@ -19,6 +21,7 @@ export const client: DiscordClient = new Client({
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.GuildModeration,
   ],
 });
 
@@ -105,3 +108,5 @@ client.login(process.env.DISCORD_TOKEN!).catch(console.error);
 
 setInterval(scanTempRoles, ms("1 minute"));
 setInterval(clearSubmissions, ms("10 minutes"));
+
+// cron.schedule("5 * * * * *", logStaffActivity);

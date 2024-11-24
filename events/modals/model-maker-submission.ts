@@ -81,7 +81,7 @@ export default {
       const weightsValidPattern = weightsUrlPattern.test(modelLink);
 
       const huggingFaceUrlPattern =
-        /https:\/\/huggingface\.co\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\/resolve\/main\/[a-zA-Z0-9._-]+\.zip/;
+        /^https:\/\/huggingface\.co\/(datasets\/)?[A-Za-z0-9_-]+\/[A-Za-z0-9_-]+\/(raw|resolve)\/[A-Za-z0-9_./%-]+(\?[A-Za-z0-9_=&%-]+)?$/gm;
       const huggingFaceValidPattern = huggingFaceUrlPattern.test(modelLink);
 
       if (!weightsValidPattern && !huggingFaceValidPattern) {
