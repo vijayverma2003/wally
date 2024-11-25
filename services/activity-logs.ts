@@ -76,7 +76,11 @@ export async function logStaffActivity() {
       staffData[staffActivity.userId] = data;
     }
 
-    const logChannel = await client.channels.fetch("1310223567346204712");
+    const logChannel = await client.channels.fetch(
+      process.env.NODE_ENV === "development"
+        ? "1310223567346204712"
+        : "1299179038396387419"
+    );
 
     for (let user in staffData) {
       try {
