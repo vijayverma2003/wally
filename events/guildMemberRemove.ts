@@ -56,7 +56,7 @@ module.exports = {
         }
       }
     } catch (error) {
-      console.log("Event - Guild Ban Add", error);
+      console.log("Event - GuildMemberRemove", error);
     }
   },
 };

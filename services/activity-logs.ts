@@ -79,43 +79,93 @@ export async function logStaffActivity() {
     const logChannel = await client.channels.fetch("1310223567346204712");
 
     for (let user in staffData) {
-      const data = staffData[user];
+      try {
+        const data = staffData[user];
 
-      const guild = client.guilds.cache.get(data.guildId);
-      const member = await guild?.members.fetch(user);
+        const guild = client.guilds.cache.get(data.guildId);
+        const member = await guild?.members.fetch(user);
 
-      const mappedChannelData = Object.keys(data.activeChannels)
-        .sort((a, b) => data.activeChannels[b] - data.activeChannels[a])
-        .slice(0, 5)
+        const mappedChannelData = Object.keys(data.activeChannels)
+          .sort((a, b) => data.activeChannels[b] - data.activeChannels[a])
+          .slice(0, 5)
+          .map(
+            (channel, index) =>
+              `${index + 1}. <#${channel}> - ${data.activeChannels[channel]}`
+          )
+          .join("\n");
+
+        const embed = new EmbedBuilder()
+          .setTitle("Staff Activity")
+          .setColor(
+            data.messages > 0
+              ? data.messages > 500
+                ? 0x3d3bf3
+                : 0x9694ff
+              : 0xff2929
+          )
+          .setDescription(
+            `
+  **User** - <@${user}> (${user})
+  **Total Messages Sent** - ${data.messages}
+  **Total Actions Taken** - ${data.bans + data.kicks + data.mutes} (${
+              data.bans
+            } Bans, ${data.kicks} Kicks and ${data.mutes} Mutes)
+  
+  **Top 5 Channels Data** 
+  
+  ${
+    mappedChannelData
+      ? mappedChannelData
+      : "No Activity <:RedDot:1310546353859858513>"
+  }
+  `
+          )
+          .setImage(
+            "https://cdn.discordapp.com/attachments/932319557853532172/1056987846591922256/7qnJwbX.png?ex=67455d64&is=67440be4&hm=506aefcd0518e404e62d09b4bb7d460b2c70a401535e646467a58fc697dc365f&"
+          );
+
+        if (member) {
+          embed.setAuthor({
+            iconURL: member.displayAvatarURL(),
+            name: member.displayName,
+          });
+
+          embed.setThumbnail(member.displayAvatarURL());
+        }
+
+        if (logChannel?.isTextBased())
+          await logChannel.send({ embeds: [embed] });
+      } catch (error) {
+        console.log("Logging Activity in Logs Channel", error);
+      }
+    }
+
+    try {
+      const staffMembers = await prisma.guildUser.findMany({
+        where: { isStaff: true },
+      });
+
+      const inactiveStaff = staffMembers
+        .filter((member) => !Object.keys(staffData).includes(member.userId))
         .map(
-          (channel, index) =>
-            `${index + 1}. <#${channel}> - ${data.activeChannels[channel]}`
+          (staff, index) => `${index + 1}. <@${staff.userId}> (${staff.userId})`
         )
         .join("\n");
 
-      const embed = new EmbedBuilder().setTitle("Staff Activity")
-        .setDescription(`
-**User** - <@${user}> (${user})
-**Total Messages Sent** - ${data.messages}
-**Total Actions Taken** - ${data.bans + data.kicks + data.mutes} (${
-        data.bans
-      } Bans, ${data.kicks} Kicks and ${data.mutes} Mutes)
+      if (inactiveStaff.length > 0) {
+        const embed = new EmbedBuilder()
+          .setTitle("List of Inactive Staff Members")
+          .setDescription(inactiveStaff)
+          .setColor(0xff2929)
+          .setImage(
+            "https://cdn.discordapp.com/attachments/932319557853532172/1056987846591922256/7qnJwbX.png?ex=67455d64&is=67440be4&hm=506aefcd0518e404e62d09b4bb7d460b2c70a401535e646467a58fc697dc365f&"
+          );
 
-**Top 5 Channels Data** 
-
-${mappedChannelData}
-`);
-
-      if (member) {
-        embed.setAuthor({
-          iconURL: member.displayAvatarURL(),
-          name: member.displayName,
-        });
-
-        embed.setThumbnail(member.displayAvatarURL());
+        if (logChannel?.isTextBased())
+          await logChannel.send({ embeds: [embed] });
       }
-
-      if (logChannel?.isTextBased()) await logChannel.send({ embeds: [embed] });
+    } catch (error) {
+      console.log("Error sending non-active staff members", error);
     }
   } catch (error) {
     console.log("log activity - ", error);
