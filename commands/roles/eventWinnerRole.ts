@@ -38,6 +38,20 @@ module.exports = {
             where: { userId_roleId: { userId: member.id, roleId: roleId } },
           });
 
+          let guildUser = await prisma.guildUser.findUnique({
+            where: {
+              userId_guildId: {
+                userId: member.user.id,
+                guildId: message.guildId!,
+              },
+            },
+          });
+
+          if (!guildUser)
+            await prisma.guildUser.create({
+              data: { userId: member.user.id, guildId: message.guildId! },
+            });
+
           if (!tempRole) {
             tempRole = await prisma.tempRole.create({
               data: {
