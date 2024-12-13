@@ -236,13 +236,15 @@ export default {
           );
 
         if (logChannel && logChannel.isTextBased()) {
+          let message;
+
           if (!attachment) {
-            await logChannel.send({
+            message = await logChannel.send({
               embeds: [logEmbed],
               components: [row],
             });
           } else {
-            await logChannel.send({
+            message = await logChannel.send({
               embeds: [logEmbed],
               files: [attachment as Attachment],
               components: [row],
@@ -251,15 +253,41 @@ export default {
 
           await prisma.modelMakerSubmission.update({
             where: { id },
-            data: { submitted: true },
+            data: {
+              submitted: true,
+              submissionChannelId: logChannel.id,
+              submissionMessageId: message.id,
+            },
           });
+
+          const dmMessage = new EmbedBuilder()
+            .setTitle("Thanks for your submission!")
+            .setDescription(
+              `If you want to cancel ${submission.modelName} model submission then click the cancel button below.`
+            )
+            .setColor(0xa594f9);
+
+          const cancelButton = new ButtonBuilder()
+            .setCustomId(`cancel-model-maker-submission-${id}`)
+            .setStyle(ButtonStyle.Danger)
+            .setLabel("Cancel Submission");
+
+          const buttonRow =
+            new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+              cancelButton
+            );
 
           if (!interaction.replied) {
             await interaction.reply({
-              content: "Thanks for your submission! :blush:",
+              content: "Thanks for your submission!",
               ephemeral: true,
             });
-          } else await dmChannel.send("Thanks for your submission! :blush:");
+          }
+
+          await dmChannel.send({
+            embeds: [dmMessage],
+            components: [buttonRow],
+          });
         }
       } catch (error) {
         console.log("Error logging submission in the channel", error);

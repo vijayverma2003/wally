@@ -7,6 +7,7 @@ import modelMakerSubmissionSelectors from "./model-maker-submission-selectors";
 import newSubmissionSetup from "./new-event-submission-setup";
 import rejectModel from "./reject-model";
 import modelMakerSubmissionModal from "./model-maker-submission-modal";
+import cancelModelMakerSubmission from "./cancel-model-maker-submission";
 
 export interface ButtonExecute {
   startsWith?: string;
@@ -22,6 +23,7 @@ const buttons: ButtonExecute[] = [
   modelMakerSubmissionSelectors,
   newSubmissionSetup,
   modelMakerSubmissionModal,
+  cancelModelMakerSubmission,
 ];
 
 export default buttons;
