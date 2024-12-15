@@ -1,13 +1,13 @@
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
 import ms from "ms";
+import cron from "node-cron";
 import fs from "node:fs";
 import path from "node:path";
+import { logStaffActivity } from "./services/activity-logs";
+import { clearSubmissions } from "./services/model-submissions";
 import { scanTempRoles } from "./services/roles";
 import { DiscordClient } from "./types/main";
-import { clearSubmissions } from "./services/model-submissions";
-import cron from "node-cron";
-import { logStaffActivity } from "./services/activity-logs";
 
 config();
 
