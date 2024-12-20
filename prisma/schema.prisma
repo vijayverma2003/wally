@@ -11,26 +11,53 @@ datasource db {
 }
 
 model Guild {
-  guildId              String                 @id
-  levelUpMessage       String?
-  levelRoleMessage     String?
-  levelUpChannelId     String?
-  GuildUser            GuildUser[]
-  LevelRole            LevelRole[]
-  EventSubmissionEmbed EventSubmissionSetup[]
-  ModelMakerSetup      ModelMakerSetup[]
+  guildId                    String                      @id
+  levelUpMessage             String?
+  levelRoleMessage           String?
+  levelUpChannelId           String?
+  liveLeaderboardChannelId   String?
+  liveLeaderboardMessageId   String?
+  liveLeaderboardResetPeriod LiveLeaderboardResetPeriod?
+  GuildUser                  GuildUser[]
+  LevelRole                  LevelRole[]
+  EventSubmissionEmbed       EventSubmissionSetup[]
+  ModelMakerSetup            ModelMakerSetup[]
+  Channel                    Channel[]
+  LiveLeaderboardPrizes      LiveLeaderboardPrizes[]
+}
+
+enum LiveLeaderboardResetPeriod {
+  weekly
+  daily
+  monthly
+}
+
+model LiveLeaderboardPrizes {
+  id       Int    @id @default(autoincrement())
+  position Int    @unique @db.TinyInt
+  prize    String
+  guildId  String @unique
+  guild    Guild  @relation(references: [guildId], fields: [guildId])
 }
 
 model GuildUser {
-  userId     String
-  level      Int        @default(1)
-  experience Int        @default(0)
-  guildId    String
-  isStaff    Boolean    @default(false)
-  guild      Guild      @relation(references: [guildId], fields: [guildId])
-  TempRole   TempRole[]
+  userId                      String
+  level                       Int        @default(1)
+  experience                  Int        @default(0)
+  guildId                     String
+  isStaff                     Boolean    @default(false)
+  liveLeaderboardMessageCount Int        @default(0)
+  guild                       Guild      @relation(references: [guildId], fields: [guildId])
+  TempRole                    TempRole[]
 
   @@id([userId, guildId])
+}
+
+model Channel {
+  channelId       String  @id
+  guildId         String
+  guild           Guild   @relation(references: [guildId], fields: [guildId])
+  liveLeaderboard Boolean
 }
 
 model LevelRole {

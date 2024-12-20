@@ -4,6 +4,7 @@ import { DiscordClient } from "../types/main";
 import addExperience from "./messages/add-experience";
 import liveMessageCount from "./messages/live-message-count";
 import trackActivity from "./messages/track-activity";
+import liveLeaderboard from "./messages/live-leaderboard";
 
 module.exports = {
   name: Events.MessageCreate,
@@ -14,6 +15,7 @@ module.exports = {
     liveMessageCount(message);
     addExperience(message);
     trackActivity(message);
+    liveLeaderboard(message);
 
     // Text Commands Execution
 
