@@ -3,7 +3,7 @@ import {
   Interaction,
   ModalBuilder,
   TextInputBuilder,
-  TextInputStyle
+  TextInputStyle,
 } from "discord.js";
 import { ButtonExecute } from ".";
 import { prisma } from "../../prisma/client";
@@ -51,7 +51,7 @@ export default {
       const messageField = new TextInputBuilder()
         .setCustomId("message")
         .setLabel("Message")
-        .setMaxLength(500)
+        .setMaxLength(800)
         .setStyle(TextInputStyle.Paragraph);
 
       const row = new ActionRowBuilder<TextInputBuilder>().addComponents(
