@@ -28,7 +28,7 @@ module.exports = {
         where: { id: submissionSetup.id, guildId: message.guild!.id },
       });
 
-      await message.react("✅");
+      await message.react("<:checkmark:1319607871876632626>");
     } catch (error) {
       console.log("Error executing delete-submission-setup command", error);
     }

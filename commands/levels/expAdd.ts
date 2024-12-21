@@ -59,7 +59,7 @@ module.exports = {
         }
 
         if (errors.length > 0) await message.channel.send(errors.join("\n"));
-        else message.react("✅");
+        else message.react("<:checkmark:1319607871876632626>");
       }
     } catch (error) {
       console.log("Error while executing give exp command", error);

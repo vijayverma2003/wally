@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 import { hasPermissions } from "../../services/user";
 import { prisma } from "../../prisma/client";
+import { extractChannelIdFromMention } from "../../services/utils";
 
 module.exports = {
   name: "lb-channel-remove",
@@ -9,9 +10,10 @@ module.exports = {
       const member = await message.guild?.members.fetch(message.author.id);
       if (!member || !hasPermissions(member) || !message.guildId) return;
 
-      const channelId = args.shift();
-
+      let channelId = args.shift();
       if (!channelId) return;
+
+      channelId = extractChannelIdFromMention(channelId);
 
       const channel = await message.guild?.channels.fetch(channelId);
       if (!channel) {
@@ -31,7 +33,7 @@ module.exports = {
 
       await message.react("<:checkmark:1319607871876632626>");
     } catch (error) {
-      console.log("Error executing lb-channel-remove command");
+      console.log("Error executing lb-channel-remove command", error);
     }
   },
 };

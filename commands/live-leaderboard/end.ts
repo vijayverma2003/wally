@@ -12,6 +12,11 @@ module.exports = {
         data: { liveLeaderboard: false },
       });
 
+      await prisma.guildUser.updateMany({
+        where: { guildId: message.guild.id },
+        data: { liveLeaderboardMessageCount: 0 },
+      });
+
       const guild = await prisma.guild.findUnique({
         where: { guildId: message.guild.id },
       });
@@ -21,7 +26,6 @@ module.exports = {
           where: { guildId: message.guild.id },
           data: {
             liveLeaderboardChannelId: null,
-            liveLeaderboardThreadId: null,
             liveLeaderboardResetPeriod: null,
             liveLeaderboardMessageId: null,
           },

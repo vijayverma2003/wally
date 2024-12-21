@@ -6,6 +6,13 @@ export default async function liveLeaderboard(message: Message) {
   try {
     if (!message.guildId) return;
 
+    const guild = await prisma.guild.findUnique({
+      where: { guildId: message.guildId },
+    });
+
+    if (!(guild?.liveLeaderboardChannelId && guild?.liveLeaderboardMessageId))
+      return;
+
     const channel = await prisma.channel.findUnique({
       where: { channelId: message.channelId, guildId: message.guildId! },
     });
@@ -48,10 +55,6 @@ export default async function liveLeaderboard(message: Message) {
       });
 
       if (leaderboard.find((user) => user.userId === message.author.id)) {
-        const guild = await prisma.guild.findUnique({
-          where: { guildId: message.guildId },
-        });
-
         if (guild?.liveLeaderboardChannelId) {
           const channel = await message.guild?.channels.fetch(
             guild.liveLeaderboardChannelId

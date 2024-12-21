@@ -85,6 +85,9 @@ export const logLeaderboardResults = async (
 
             if (message.hasThread) {
               await message.thread?.send({
+                content: `### Live Leaderboard Results - ${moment().format(
+                  "DD/MM/YYYY"
+                )}`,
                 embeds: [createLeaderboard(users, prizes, true)],
               });
             } else {
@@ -95,11 +98,19 @@ export const logLeaderboardResults = async (
               });
 
               await thread.send({
+                content: `### Live Leaderboard Results - ${moment().format(
+                  "DD/MM/YYYY"
+                )}`,
                 embeds: [createLeaderboard(users, prizes, true)],
               });
             }
           }
         }
+
+        await prisma.guildUser.updateMany({
+          where: { guildId: guild.guildId },
+          data: { liveLeaderboardMessageCount: 0 },
+        });
       } catch (error) {
         console.log(
           `ERROR - Live leaderboard ${resetPeriod} logs -  ${guild.guildId}`,

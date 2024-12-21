@@ -114,7 +114,9 @@ module.exports = {
               .setDescription(errors.join("")),
           ],
         });
-      else message.react("✅");
-    } catch (error) {}
+      else message.react("<:checkmark:1319607871876632626>");
+    } catch (error) {
+      console.log("Error executing add-temp-role command", error);
+    }
   },
 };

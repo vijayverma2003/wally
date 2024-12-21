@@ -35,7 +35,7 @@ module.exports = {
         data: { maxSubmissions: parseInt(count) },
       });
 
-      await message.react("✅");
+      await message.react("<:checkmark:1319607871876632626>");
     } catch (error) {
       console.log("Error executing set-max-submissions command", error);
     }

@@ -31,7 +31,7 @@ module.exports = {
 
       await message.react("<:checkmark:1319607871876632626>");
     } catch (error) {
-      console.log("Error executing lb-prize-remove command");
+      console.log("Error executing lb-prize-remove command", error);
     }
   },
 };

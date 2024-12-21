@@ -22,7 +22,7 @@ module.exports = {
         },
       });
 
-      await message.react("✅");
+      await message.react("<:checkmark:1319607871876632626>");
     } catch (error) {
       console.log("Error executing set role message command", error);
     }

@@ -24,7 +24,7 @@ module.exports = {
 
       await message.reply({ embeds: [embed] });
     } catch (error) {
-      console.log("Error executing lb-channel-list command");
+      console.log("Error executing lb-channel-list command", error);
     }
   },
 };

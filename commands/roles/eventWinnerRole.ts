@@ -101,7 +101,7 @@ module.exports = {
               .setDescription(errors.join("")),
           ],
         });
-      else message.react("✅");
+      else message.react("<:checkmark:1319607871876632626>");
     } catch (error) {
       console.log("Error executing eventwinner role", error);
     }

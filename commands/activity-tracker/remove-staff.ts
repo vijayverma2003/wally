@@ -31,7 +31,7 @@ module.exports = {
           },
         });
 
-        await message.react("✅");
+        await message.react("<:checkmark:1319607871876632626>");
         return;
       } else
         await message.reply("Oops, could not find the user in the database!");

@@ -12,6 +12,17 @@ module.exports = {
       const channelId = args.shift();
       if (!channelId) return;
 
+      const guild = await prisma.guild.findUnique({
+        where: { guildId: message.guild.id },
+      });
+
+      if (guild?.liveLeaderboardChannelId && guild.liveLeaderboardMessageId) {
+        await message.reply(
+          `Live leaderboard has been already started in <#${guild.liveLeaderboardChannelId}> :frowning:`
+        );
+        return;
+      }
+
       const channels = await prisma.channel.findMany({
         where: { liveLeaderboard: true, guildId: message.guildId! },
       });

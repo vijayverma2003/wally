@@ -9,10 +9,21 @@ module.exports = {
       if (!message.guild) return;
 
       const resetPeriod = args.shift();
+
       if (!resetPeriod) {
-        await message.reply(
-          "Reset period should be either weekly or monthly :blush:"
-        );
+        await prisma.guild.upsert({
+          where: { guildId: message.guild.id },
+          create: {
+            liveLeaderboardResetPeriod: undefined,
+            guildId: message.guild.id,
+          },
+          update: {
+            liveLeaderboardResetPeriod: undefined,
+          },
+        });
+
+        await message.react("<:checkmark:1319607871876632626>");
+
         return;
       }
 
