@@ -112,5 +112,4 @@ setInterval(clearSubmissions, ms("10 minutes"));
 
 cron.schedule("0 19 * * 0", logStaffActivity);
 cron.schedule("0 0 * * 0", () => logLeaderboardResults("weekly"));
-cron.schedule("0 * * * * *", () => logLeaderboardResults("weekly"));
 cron.schedule("0 0 28-31 * *", () => logLeaderboardResults("monthly"));
