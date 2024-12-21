@@ -17,6 +17,7 @@ model Guild {
   levelUpChannelId           String?
   liveLeaderboardChannelId   String?
   liveLeaderboardMessageId   String?
+  liveLeaderboardThreadId    String?
   liveLeaderboardResetPeriod LiveLeaderboardResetPeriod?
   GuildUser                  GuildUser[]
   LevelRole                  LevelRole[]

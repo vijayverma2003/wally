@@ -28,15 +28,21 @@ module.exports = {
         .addOptions(
           new StringSelectMenuOptionBuilder()
             .setEmoji(emojis.leaderboard)
-            .setLabel("Levelling")
-            .setDescription("Configure level settings, roles and messages")
+            .setLabel("Levelling System")
+            .setDescription("Configure user level settings, roles and messages")
             .setValue("levelling"),
+          new StringSelectMenuOptionBuilder()
+            .setEmoji("<:live:1319630764869943316>")
+            .setLabel("Live Leaderboard")
+            .setDescription("Setup weekly or monthyl live messages leaderboard")
+            .setValue("live-leaderboard"),
           new StringSelectMenuOptionBuilder()
             .setEmoji(emojis.roles)
             .setLabel("Temporary Roles")
             .setDescription("Give temporary roles to users")
             .setValue("roles"),
           new StringSelectMenuOptionBuilder()
+            .setEmoji("<:trophy:1319993427567579158>")
             .setLabel("Event Submissions Setup")
             .setDescription("Setup event submissions in no time")
             .setValue("event-submission")

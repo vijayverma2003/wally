@@ -19,7 +19,7 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setTitle("Leaderboard Channels")
-        .setDescription(mappedChannels && "...")
+        .setDescription(mappedChannels ? mappedChannels : "...")
         .setColor(0xa594f9);
 
       await message.reply({ embeds: [embed] });

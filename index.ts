@@ -8,6 +8,7 @@ import { logStaffActivity } from "./services/activity-logs";
 import { clearSubmissions } from "./services/model-submissions";
 import { scanTempRoles } from "./services/roles";
 import { DiscordClient } from "./types/main";
+import { logLeaderboardResults } from "./services/guild";
 
 config();
 
@@ -110,3 +111,6 @@ setInterval(scanTempRoles, ms("1 minute"));
 setInterval(clearSubmissions, ms("10 minutes"));
 
 cron.schedule("0 19 * * 0", logStaffActivity);
+cron.schedule("0 0 * * 0", () => logLeaderboardResults("weekly"));
+cron.schedule("0 0 28-31 * *", () => logLeaderboardResults("monthly"));
+cron.schedule("0 * * * * *", () => logLeaderboardResults("monthly"));

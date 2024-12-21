@@ -47,14 +47,10 @@ export default async function liveLeaderboard(message: Message) {
         take: 10,
       });
 
-      console.log(leaderboard);
-
       if (leaderboard.find((user) => user.userId === message.author.id)) {
         const guild = await prisma.guild.findUnique({
           where: { guildId: message.guildId },
         });
-
-        console.log(guild);
 
         if (guild?.liveLeaderboardChannelId) {
           const channel = await message.guild?.channels.fetch(
@@ -76,8 +72,6 @@ export default async function liveLeaderboard(message: Message) {
               where: { guildId: message.guild.id },
             });
 
-            console.log(users);
-
             if (message)
               await message.edit({
                 embeds: [createLeaderboard(users, prizes)],
@@ -87,6 +81,6 @@ export default async function liveLeaderboard(message: Message) {
       }
     }
   } catch (error) {
-    console.log("Setting message count", error);
+    console.log("Setting message count in live leaderboard", error);
   }
 }

@@ -1,6 +1,8 @@
-import { Client, EmbedBuilder } from "discord.js";
+import { Client, EmbedBuilder, ThreadAutoArchiveDuration } from "discord.js";
 import { prisma } from "../prisma/client";
 import { GuildUser, LiveLeaderboardPrizes } from "@prisma/client";
+import { client } from "..";
+import moment from "moment";
 
 export const scanAndCreateGuilds = async (client: Client) => {
   const guilds = await client.guilds.fetch();
@@ -21,7 +23,8 @@ export const scanAndCreateGuilds = async (client: Client) => {
 
 export const createLeaderboard = (
   users: GuildUser[],
-  prizes: LiveLeaderboardPrizes[]
+  prizes: LiveLeaderboardPrizes[],
+  snapshot?: boolean
 ) => {
   let lb = [];
 
@@ -40,6 +43,74 @@ export const createLeaderboard = (
    
 ${lb.join("\n")}
 
--# Last updated - <t:${Math.floor(Date.now() / 1000)}:R>
+${snapshot ? "" : `-# Last updated - <t:${Math.floor(Date.now() / 1000)}:R>`}
 `);
+};
+
+export const logLeaderboardResults = async (
+  resetPeriod: "weekly" | "monthly"
+) => {
+  try {
+    const endOfMonth = moment().endOf("month").get("date");
+    const today = moment().get("date");
+
+    if (resetPeriod === "monthly" && endOfMonth !== today) return;
+
+    const guilds = await prisma.guild.findMany({
+      where: { liveLeaderboardResetPeriod: resetPeriod },
+    });
+
+    for (let guild of guilds) {
+      try {
+        if (guild.liveLeaderboardChannelId && guild.liveLeaderboardMessageId) {
+          const server = await client.guilds.fetch(guild.guildId);
+          const channel = await server.channels.fetch(
+            guild.liveLeaderboardChannelId
+          );
+
+          if (channel && channel.isTextBased()) {
+            const message = await channel.messages.fetch(
+              guild.liveLeaderboardMessageId
+            );
+
+            const users = await prisma.guildUser.findMany({
+              where: { guildId: message.guild.id },
+              orderBy: { liveLeaderboardMessageCount: "desc" },
+              take: 10,
+            });
+
+            const prizes = await prisma.liveLeaderboardPrizes.findMany({
+              where: { guildId: message.guild.id },
+            });
+
+            if (message.hasThread) {
+              await message.thread?.send({
+                embeds: [createLeaderboard(users, prizes, true)],
+              });
+            } else {
+              const thread = await message.startThread({
+                name: "Leaderboard Results",
+                autoArchiveDuration: ThreadAutoArchiveDuration.OneDay,
+                reason: `Logs the results of ${resetPeriod} leaderboard`,
+              });
+
+              await thread.send({
+                embeds: [createLeaderboard(users, prizes, true)],
+              });
+            }
+          }
+        }
+      } catch (error) {
+        console.log(
+          `ERROR - Live leaderboard ${resetPeriod} logs -  ${guild.guildId}`,
+          error
+        );
+      }
+    }
+  } catch (error) {
+    console.log(
+      `Error while logging ${resetPeriod} leaderboard results`,
+      error
+    );
+  }
 };

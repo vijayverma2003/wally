@@ -1,17 +1,10 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  EmbedBuilder,
-  Message,
-  MessageActionRowComponentBuilder,
-} from "discord.js";
+import { Message } from "discord.js";
 import { prisma } from "../../prisma/client";
 import { createLeaderboard } from "../../services/guild";
 import { extractChannelIdFromMention } from "../../services/utils";
 
 module.exports = {
-  name: "live-leaderboard-start",
+  name: "lb-start",
   async execute(message: Message, args: string[]) {
     try {
       if (!message.guild) return;
@@ -27,7 +20,7 @@ module.exports = {
         const channels = await message.guild.channels.fetch();
 
         channels.forEach(async (channel) => {
-          if (channel)
+          if (channel && channel.isTextBased())
             await prisma.channel.upsert({
               where: { guildId: message.guild?.id, channelId: channel.id },
               create: {
@@ -80,7 +73,10 @@ module.exports = {
         }
       }
     } catch (error) {
-      console.log("Error executing the live-leaderboard text command", error);
+      console.log(
+        "Error executing the live-leaderboard-start text command",
+        error
+      );
     }
   },
 };
