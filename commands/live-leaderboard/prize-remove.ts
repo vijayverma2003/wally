@@ -26,7 +26,12 @@ module.exports = {
       }
 
       await prisma.liveLeaderboardPrizes.delete({
-        where: { position: parseedPosition, guildId: message.guildId },
+        where: {
+          position_guildId: {
+            position: parseedPosition,
+            guildId: message.guildId,
+          },
+        },
       });
 
       await message.react("<:checkmark:1319607871876632626>");

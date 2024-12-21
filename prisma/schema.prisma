@@ -34,10 +34,12 @@ enum LiveLeaderboardResetPeriod {
 
 model LiveLeaderboardPrizes {
   id       Int    @id @default(autoincrement())
-  position Int    @unique @db.TinyInt
+  position Int    @db.TinyInt
   prize    String
-  guildId  String @unique
+  guildId  String
   guild    Guild  @relation(references: [guildId], fields: [guildId])
+
+  @@unique([position, guildId])
 }
 
 model GuildUser {

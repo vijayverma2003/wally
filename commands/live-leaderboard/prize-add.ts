@@ -34,7 +34,12 @@ module.exports = {
       }
 
       await prisma.liveLeaderboardPrizes.upsert({
-        where: { position: parseedPosition, guildId: message.guildId },
+        where: {
+          position_guildId: {
+            position: parseedPosition,
+            guildId: message.guildId,
+          },
+        },
         create: { position: parseedPosition, prize, guildId: message.guildId },
         update: { prize },
       });
