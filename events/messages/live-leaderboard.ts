@@ -47,45 +47,6 @@ export default async function liveLeaderboard(message: Message) {
             liveLeaderboardMessageCount: 1,
           },
         });
-
-      const leaderboard = await prisma.guildUser.findMany({
-        where: { guildId: message.guildId },
-        orderBy: { liveLeaderboardMessageCount: "desc" },
-        take: 10,
-      });
-
-      if (leaderboard.find((user) => user.userId === message.author.id)) {
-        try {
-          if (guild?.liveLeaderboardChannelId) {
-            const channel = await message.guild?.channels.fetch(
-              guild.liveLeaderboardChannelId
-            );
-
-            if (channel?.isTextBased() && guild.liveLeaderboardMessageId) {
-              const message = await channel.messages.fetch(
-                guild.liveLeaderboardMessageId
-              );
-
-              const users = await prisma.guildUser.findMany({
-                where: { guildId: message.guild.id },
-                orderBy: { liveLeaderboardMessageCount: "desc" },
-                take: 10,
-              });
-
-              const prizes = await prisma.liveLeaderboardPrizes.findMany({
-                where: { guildId: message.guild.id },
-              });
-
-              if (message)
-                await message.edit({
-                  embeds: [createLeaderboard(users, prizes)],
-                });
-            }
-          }
-        } catch (error) {
-          console.log("Error while updating leaderboard message", error);
-        }
-      }
     }
   } catch (error) {
     console.log("Setting message count in live leaderboard", error);

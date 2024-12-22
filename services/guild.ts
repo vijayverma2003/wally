@@ -125,3 +125,48 @@ export const logLeaderboardResults = async (
     );
   }
 };
+
+export async function updateLeaderboard() {
+  try {
+    const guilds = await prisma.guild.findMany();
+
+    for (let guild of guilds) {
+      try {
+        if (guild.liveLeaderboardChannelId && guild.liveLeaderboardMessageId) {
+          const server = await client.guilds.fetch(guild.guildId);
+          const channel = await server.channels.fetch(
+            guild.liveLeaderboardChannelId
+          );
+
+          if (channel && channel.isTextBased()) {
+            const message = await channel.messages.fetch(
+              guild.liveLeaderboardMessageId
+            );
+
+            const users = await prisma.guildUser.findMany({
+              where: { guildId: message.guild.id },
+              orderBy: { liveLeaderboardMessageCount: "desc" },
+              take: 10,
+            });
+
+            const prizes = await prisma.liveLeaderboardPrizes.findMany({
+              where: { guildId: message.guild.id },
+            });
+
+            if (message)
+              await message.edit({
+                embeds: [createLeaderboard(users, prizes)],
+              });
+          }
+        }
+      } catch (error) {
+        console.log(
+          `ERROR - Live leaderboard Update logs -  ${guild.guildId}`,
+          error
+        );
+      }
+    }
+  } catch (error) {
+    console.log("Error while updating leaderboard", error);
+  }
+}
