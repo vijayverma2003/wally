@@ -55,31 +55,35 @@ export default async function liveLeaderboard(message: Message) {
       });
 
       if (leaderboard.find((user) => user.userId === message.author.id)) {
-        if (guild?.liveLeaderboardChannelId) {
-          const channel = await message.guild?.channels.fetch(
-            guild.liveLeaderboardChannelId
-          );
-
-          if (channel?.isTextBased() && guild.liveLeaderboardMessageId) {
-            const message = await channel.messages.fetch(
-              guild.liveLeaderboardMessageId
+        try {
+          if (guild?.liveLeaderboardChannelId) {
+            const channel = await message.guild?.channels.fetch(
+              guild.liveLeaderboardChannelId
             );
 
-            const users = await prisma.guildUser.findMany({
-              where: { guildId: message.guild.id },
-              orderBy: { liveLeaderboardMessageCount: "desc" },
-              take: 10,
-            });
+            if (channel?.isTextBased() && guild.liveLeaderboardMessageId) {
+              const message = await channel.messages.fetch(
+                guild.liveLeaderboardMessageId
+              );
 
-            const prizes = await prisma.liveLeaderboardPrizes.findMany({
-              where: { guildId: message.guild.id },
-            });
-
-            if (message)
-              await message.edit({
-                embeds: [createLeaderboard(users, prizes)],
+              const users = await prisma.guildUser.findMany({
+                where: { guildId: message.guild.id },
+                orderBy: { liveLeaderboardMessageCount: "desc" },
+                take: 10,
               });
+
+              const prizes = await prisma.liveLeaderboardPrizes.findMany({
+                where: { guildId: message.guild.id },
+              });
+
+              if (message)
+                await message.edit({
+                  embeds: [createLeaderboard(users, prizes)],
+                });
+            }
           }
+        } catch (error) {
+          console.log("Error while updating leaderboard message", error);
         }
       }
     }
