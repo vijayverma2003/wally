@@ -1,6 +1,5 @@
 import { Message } from "discord.js";
 import { prisma } from "../../prisma/client";
-import { createLeaderboard } from "../../services/guild";
 
 export default async function liveLeaderboard(message: Message) {
   try {
