@@ -34,7 +34,7 @@ export default async function addExperience(message: Message) {
           },
         });
       } else {
-        const exp = getRandomNumberInRange(1, 5);
+        const exp = getRandomNumberInRange(5, 15);
         const updatedExp = guildUser.experience + exp;
 
         const levelUp =
