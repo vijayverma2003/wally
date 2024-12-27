@@ -3,7 +3,7 @@ import { prisma } from "../../prisma/client";
 
 export default async function liveLeaderboard(message: Message) {
   try {
-    if (!message.guildId) return;
+    if (!message.guildId || message.channel.isThread()) return;
 
     const guild = await prisma.guild.findUnique({
       where: { guildId: message.guildId },
