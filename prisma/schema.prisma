@@ -12,6 +12,7 @@ datasource db {
 
 model Guild {
   guildId                    String                      @id
+  vanityRole                 String?
   levelUpMessage             String?
   levelRoleMessage           String?
   levelUpChannelId           String?
@@ -24,6 +25,14 @@ model Guild {
   ModelMakerSetup            ModelMakerSetup[]
   Channel                    Channel[]
   LiveLeaderboardPrizes      LiveLeaderboardPrizes[]
+  GuildVanity                GuildVanity[]
+}
+
+model GuildVanity {
+  id        Int    @id @default(autoincrement())
+  guildId   String
+  guild     Guild  @relation(references: [guildId], fields: [guildId])
+  vanityURL String
 }
 
 enum LiveLeaderboardResetPeriod {

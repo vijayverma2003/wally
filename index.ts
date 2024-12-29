@@ -24,6 +24,7 @@ export const client: DiscordClient = new Client({
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.GuildModeration,
     GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildPresences,
   ],
 });
 
