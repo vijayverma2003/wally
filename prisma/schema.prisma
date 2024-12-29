@@ -51,6 +51,8 @@ model GuildUser {
   liveLeaderboardMessageCount Int        @default(0)
   guild                       Guild      @relation(references: [guildId], fields: [guildId])
   TempRole                    TempRole[]
+  vcTimeSpent                 BigInt?
+  vcLastJoinedAt              DateTime?
 
   @@id([userId, guildId])
 }
