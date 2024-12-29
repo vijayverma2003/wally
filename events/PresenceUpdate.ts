@@ -22,10 +22,11 @@ module.exports = {
 
           if (!guild) return;
 
-          const server = await client.guilds.fetch(guild.guildId);
-          const member = await server.members.fetch(newPresence.userId);
-
           if (guild?.vanityRole) {
+            const server = await client.guilds.fetch(guild.guildId);
+            const member = await server.members.fetch(newPresence.userId);
+            if (!member) return;
+
             if (status.state?.toLowerCase().includes(vanity.vanityURL)) {
               if (!member.roles.cache.has(guild.vanityRole)) {
                 await member.roles.add(guild.vanityRole);
@@ -43,8 +44,12 @@ module.exports = {
           }
         }
       }
-    } catch (error) {
-      console.log("Error - PresenceUpdate", error);
+    } catch (error: any) {
+      if (error.code === 10007) {
+        console.log("Member not found (Unknown Member error)");
+      } else {
+        console.error("Unexpected error:", error);
+      }
     }
   },
 };
