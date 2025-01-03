@@ -114,7 +114,7 @@ setInterval(clearSubmissions, ms("10 minutes"));
 setInterval(updateLeaderboard, 20000);
 
 cron.schedule("0 19 * * 0", logStaffActivity);
-cron.schedule("15 8 * * 0", () => logLeaderboardResults("weekly"), {
+cron.schedule("0 0 * * 0", () => logLeaderboardResults("weekly"), {
   timezone: "Asia/Calcutta",
 });
 cron.schedule("0 0 28-31 * *", () => logLeaderboardResults("monthly"));
